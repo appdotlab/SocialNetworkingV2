@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "89042839257-62siu4t5jra5uuma4knt3i1stga3os0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.photouploader",
+            "certificate_hash": "b4ef5571ccb35dec2a7a523f04a735249c13ff3e"
+          }
+        },
+        {
           "client_id": "89042839257-sro4ps41ej41n58ou8r222rqe7g7vrea.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

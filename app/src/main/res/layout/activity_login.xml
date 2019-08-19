@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.photouploader.loginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="175dp"
+
+            android:layout_marginRight="50dp"
+            android:contentDescription="emailField"
+            android:ems="10"
+            android:hint="Enter your Email :"
+            android:inputType="textEmailAddress"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Email:" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editEmail"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"
+
+            android:autofillHints="gmail.com"
+            android:ems="10"
+            android:hint="Enter the Password"
+            android:inputType="textPassword"
+            android:textSize="20dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Password:"
+            app:met_minCharacters="6" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editPassword"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"
+            android:text="Login"
+            android:textSize="17dp"
+            android:backgroundTintMode="screen"/>
+
+        <TextView
+            android:id="@+id/registerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@+id/loginButton"
+            android:layout_centerInParent="false"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:text="Not an existing user?"
+            android:textSize="17dp" />
+
+        <Button
+            android:id="@+id/regIntent"
+            android:layout_width="125dp"
+            android:layout_height="24dp"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_below="@+id/loginButton"
+            android:layout_centerInParent="false"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="false"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp"
+            android:layout_toRightOf="@+id/registerText"
+            android:background="#F9F9F9"
+            android:contentDescription="regbutton"
+            android:text="Register Now"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#3F51B5" />
+
+        <Button
+            android:id="@+id/googleAuth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="15dp"
+           />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="OR"
+            android:textColor="#000000"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

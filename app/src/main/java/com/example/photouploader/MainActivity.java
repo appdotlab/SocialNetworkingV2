@@ -77,42 +77,42 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void upload(){
-        uploadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(filePath != null)
-                {
-                    final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
-                    progressDialog.setTitle("Uploading...");
-                    progressDialog.show();
+        public void upload(){
+            uploadBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(filePath != null)
+                    {
+                        final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
+                        progressDialog.setTitle("Uploading...");
+                        progressDialog.show();
 
-                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-                    ref.putFile(filePath)
-                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                            .getTotalByteCount());
-                                    progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                                }
-                            });
+                        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+                        ref.putFile(filePath)
+                                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(MainActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                        double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                                .getTotalByteCount());
+                                        progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                                    }
+                                });
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.photouploader.registerActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/usernameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="15dp"
+            android:contentDescription="userField"
+            android:ems="10"
+            android:hint="Enter your username :"
+            android:inputType="text"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Username:" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/emailField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+
+            android:layout_below="@id/usernameField"
+            android:layout_marginRight="15dp"
+            android:contentDescription="emailField"
+            android:ems="10"
+            android:hint="Enter your Email :"
+            android:inputType="textEmailAddress"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Email:"
+
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/PasswordField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/emailField"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:contentDescription="PasswordField"
+            android:ems="10"
+            android:hint="Enter your Password :"
+            android:inputType="textPassword"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:met_floatingLabel="highlight"
+
+            app:met_floatingLabelText="Password:"
+            app:met_minCharacters="6" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/repeatPasswordField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/PasswordField"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:contentDescription="passwordField"
+            android:ems="10"
+            android:hint="Re-Enter your Password :"
+            android:inputType="textPassword"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:met_floatingLabel="highlight"
+
+            app:met_floatingLabelText="Password:"
+            app:met_minCharacters="6" />
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/repeatPasswordField"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="150dp"
+            android:backgroundTintMode="screen"
+            android:text="Register" />
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerButton"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="100dp"
+            android:backgroundTintMode="screen"
+            android:text="Already have an Account? Login"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

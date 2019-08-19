@@ -36,7 +36,7 @@ public class loginActivity extends AppCompatActivity
 {
 
     //Declaration
-    String token = "531734439458-d3r4g802guk6i92kls6k9mghnag3h34t.apps.googleusercontent.com";
+    String token = "89042839257-01213s3kkgb417pmgm2lei0lregivc2q.apps.googleusercontent.com";
     int RC_SIGN_IN = 0;
     MaterialEditText editEmail, editPassword;
     Button loginButton, registerButton, googleauthButton;
@@ -92,12 +92,14 @@ public class loginActivity extends AppCompatActivity
     private void googleSignIn(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        Log.d("TAGsss", "firebaseAuthWithGoogle:1");
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Log.d("TAGsss", "firebaseAuthWithGoogle:2");
         if (requestCode == RC_SIGN_IN) {
+            Log.d("TAGsss", "firebaseAuthWithGoogle:3");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
@@ -105,16 +107,18 @@ public class loginActivity extends AppCompatActivity
                 Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
                 if (account != null) firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Log.w("TAG", "Google sign in failed", e);
+                Log.w("TAGsss", "Google sign in failed", e);
             }
         }
     }
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
+        Log.d("TAGsss", "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        Toast.makeText(loginActivity.this, "Working",
+                Toast.LENGTH_SHORT).show();
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -145,7 +149,7 @@ public class loginActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(),HomeFragment.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("email", email);
-            startActivity(intent);
+            //startActivity(intent);
             finish();
 
 

@@ -55,7 +55,8 @@ public class AddPostFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.imageView);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-
+        choose();
+        upload();
         return view;
     }
     public void choose(){

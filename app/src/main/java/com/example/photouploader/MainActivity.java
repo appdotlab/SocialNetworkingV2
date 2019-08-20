@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity { SharedPreferences prefs;
                     selectedFragment = new AddPostFragment();
                     break;
                 case R.id.navigation_profile:
-                    selectedFragment = new HomeFragment();
+                    Log.w("Clicked","worked");
+                    selectedFragment = new UserProfile();
                     break;
                 case R.id.navigation_temp:
                     selectedFragment = new SearchFragment();

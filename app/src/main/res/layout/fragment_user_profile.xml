@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".UserProfile"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+
+    <TextView
+        android:id="@+id/Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/dp"
+        android:shadowRadius="50"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/Followers"
+        android:layout_width="95dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/Name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/dp"
+        android:text="Followers"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#00000000"
+        android:textSize="25dp"
+        tools:visibility="visible" />
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_marginTop="20dp"-->
+    <TextView
+        android:id="@+id/Following"
+        android:layout_width="95dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/Name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@+id/Followers"
+        android:text="Following"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="250dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar" />
+
+
+</RelativeLayout>

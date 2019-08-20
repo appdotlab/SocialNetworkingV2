@@ -8,20 +8,20 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/navigation_newPost"
+        android:id="@+id/navigation_Search"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="New Post" />
+        android:title="Search" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_newPost"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Notifications" />
+        android:title="New Post" />
     <item
-        android:id="@+id/navigation_Profile"
+        android:id="@+id/navigation_temp"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="temp" />
+    <item
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="Profile" />
-    <item
-        android:id="@+id/navigation_Search"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Search" />
 </menu>

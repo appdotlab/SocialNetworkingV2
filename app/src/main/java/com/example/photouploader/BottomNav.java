@@ -22,17 +22,17 @@ public class BottomNav extends AppCompatActivity {
                 case R.id.navigation_home:
                     mTextMessage.setText("Home");
                     return true;
-                case R.id.navigation_newPost:
-                    mTextMessage.setText("New post");
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText("Notifications");
-                    return true;
-                case R.id.navigation_Profile:
-                    mTextMessage.setText("Profile");
-                    return true;
                 case R.id.navigation_Search:
                     mTextMessage.setText("Search");
+                    return true;
+                case R.id.navigation_newPost:
+                    mTextMessage.setText("New Post");
+                    return true;
+                case R.id.navigation_temp:
+                    mTextMessage.setText("Logout");
+                    return true;
+                case R.id.navigation_profile:
+                    mTextMessage.setText("Profile");
                     return true;
 
             }

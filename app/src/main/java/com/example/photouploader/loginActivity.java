@@ -42,7 +42,7 @@ public class loginActivity extends AppCompatActivity
     Button loginButton, registerButton, googleauthButton;
     private FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
-    DatabaseReference mDatabase, currentUser;
+    DatabaseReference mDatabase, currentUser, userRef;
     SharedPreferences prefs;
     Task<Void> currentRef;
 
@@ -53,15 +53,19 @@ public class loginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
 
         //Initialize text fields
+
         editEmail = (MaterialEditText) findViewById(R.id.editEmail);
         editPassword = (MaterialEditText) findViewById(R.id.editPassword);
 
         //Initialize Buttons
+
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.regIntent);
         googleauthButton = (Button) findViewById(R.id.googleAuth);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
         // Initialize Firebase Auth
+
         mAuth = FirebaseAuth.getInstance();
         prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
         String userID = prefs.getString("userID","nil");
@@ -92,33 +96,58 @@ public class loginActivity extends AppCompatActivity
     private void googleSignIn(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        Log.d("TAGsss", "firebaseAuthWithGoogle:1");
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TAGsss", "firebaseAuthWithGoogle:2");
         if (requestCode == RC_SIGN_IN) {
-            Log.d("TAGsss", "firebaseAuthWithGoogle:3");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
                 if (account != null) firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Log.w("TAGsss", "Google sign in failed", e);
+                Log.w("TAG", "Google sign in failed", e);
             }
         }
     }
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("TAGsss", "firebaseAuthWithGoogle:" + acct.getId());
+        Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        Toast.makeText(loginActivity.this, "Working",
-                Toast.LENGTH_SHORT).show();
+        final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        FirebaseUser user = mAuth.getCurrentUser();
+        final String email = user.getEmail();
+        userRef = mDatabase.child("Users");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Boolean userExists = false;
+                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                    if(email.compareTo((String) userSnapshot.child("email").getValue()) == 0){
+                        userExists = true;
+                        break;
+                    }
+                }
+
+                if(userExists == true){
+                    mAuthLogin(credential);
+                }
+                else{
+                    Toast.makeText(loginActivity.this, "Account Doesn't Exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void mAuthLogin(AuthCredential credential){
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -128,28 +157,41 @@ public class loginActivity extends AppCompatActivity
                             Log.d("TAG", "signInWithCredential:success");
 
                             FirebaseUser user = mAuth.getCurrentUser();
-                            loginActivity.this.updateUI(user);
+                            updateUI(user);
                         } else {
 
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
 
                             Toast.makeText(loginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            loginActivity.this.updateUI(null);
                         }
                     }
                 });
     }
+
     public void updateUI(FirebaseUser user) {
         if (user != null) {
-            String name = user.getDisplayName();
-            String email = user.getEmail();
+            final String userID = user.getUid();
+            currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("name");
+            currentUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    SharedPreferences prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
+                    prefs.edit()
+                            .putString("name", String.valueOf(dataSnapshot.getValue()))
+                            .putString("userID", userID)
+                            .apply();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Error", "Error");
+                }
+            });
 
             Toast.makeText(loginActivity.this, "Logged In successfully", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getApplicationContext(),HomeFragment.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("email", email);
-            //startActivity(intent);
+            Intent i = new Intent(loginActivity.this,loginActivity.class);
+            startActivity(i);
             finish();
 
 
@@ -171,7 +213,6 @@ public class loginActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent regIntent = new Intent(loginActivity.this, registerActivity.class);
                 startActivity(regIntent);
-                finish();
             }
         });
     }
@@ -240,11 +281,7 @@ public class loginActivity extends AppCompatActivity
             }
         });
     }
-    /*public void Logout() {
-        mAuth.signOut();
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                task -> updateUI(null));
-    }*/
+
     public void Logout() {
         // Firebase sign out
         mAuth.signOut();

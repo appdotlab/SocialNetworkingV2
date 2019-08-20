@@ -118,6 +118,18 @@
             android:text="Already have an Account? Login"
             android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/googleRegBtn"
+            android:layout_width="278dp"
+            android:layout_height="55dp"
+            android:layout_below="@+id/backButton"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="100dp"
+            android:background="@drawable/google_btn"
+            android:backgroundTintMode="screen"
+            android:textSize="14sp" />
+
     </RelativeLayout>
 
 </LinearLayout>

@@ -44,6 +44,8 @@ public class AddPostFragment extends Fragment {
     private Uri filePath;
     FirebaseStorage storage;
     StorageReference storageReference;
+    DatabaseReference postRef;
+    SharedPreferences prefs;
 
     @Nullable
     @Override
@@ -55,6 +57,7 @@ public class AddPostFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.imageView);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         choose();
         upload();
         return view;
@@ -87,6 +90,7 @@ public class AddPostFragment extends Fragment {
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     progressDialog.dismiss();
                                     Toast.makeText(getActivity().getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                                    uploadSuccess();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -109,8 +113,6 @@ public class AddPostFragment extends Fragment {
         });
     }
 
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -127,6 +129,13 @@ public class AddPostFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void uploadSuccess(){
+        String userID = prefs.getString("userID", "N/A");
+        postRef = FirebaseDatabase.getInstance().getReference().child("Posts").push();
+        postRef.child("userID").setValue(userID);
+        postRef.child("url").setValue(String.valueOf(filePath));
     }
 
 }

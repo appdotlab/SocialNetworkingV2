@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_name1"
+        android:layout_margin="30dp"
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelAlwaysShown="true"
+        app:met_floatingLabelTextColor="@android:color/holo_green_dark"
+        app:met_floatingLabelText="Name: "
+        android:textSize="15dp"
+
+        />
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_bio1"
+        android:layout_margin="30dp"
+        app:met_floatingLabel="highlight"
+        android:layout_below="@+id/edit_name1"
+        app:met_floatingLabelAlwaysShown="true"
+        app:met_floatingLabelTextColor="@android:color/holo_green_dark"
+        app:met_floatingLabelText="Bio: "
+        android:textSize="15dp"
+
+        />
+
+</RelativeLayout>

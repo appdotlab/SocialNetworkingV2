@@ -1,6 +1,7 @@
 package com.example.photouploader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -21,9 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class UserProfile extends Fragment {
+public class UserProfile extends Fragment implements editProfileDialog.editProfileDialogListener {
 
-    TextView usernameText, followersText, followingText;
+    TextView usernameText, followersText, followingText,bioText;
     Button editProfileBtn;
     SharedPreferences prefs;
     DatabaseReference userRef;
@@ -36,12 +37,38 @@ public class UserProfile extends Fragment {
         usernameText = (TextView) view.findViewById(R.id.usernameText);
         followersText = (TextView) view.findViewById(R.id.followersText);
         followingText = (TextView) view.findViewById(R.id.followingText);
+        editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
+        bioText = (TextView) view.findViewById(R.id.bioText);
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         updateUI();
 
+        editProfile();
         return view;
     }
 
+
+    public void openDialog() {
+        editProfileDialog editProfileDialog = new editProfileDialog();
+        editProfileDialog.show(getActivity().getSupportFragmentManager(), "editProfile dialog");
+    }
+
+    @Override
+    public void applyTexts(String name, String bio) {
+        usernameText.setText(name);
+        bioText.setText(bio);
+    }
+    public void editProfile()
+    {
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                openDialog();
+
+            }
+        });
+
+    }
     private void updateUI(){
         String userID = prefs.getString("userID", "N/A");
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);

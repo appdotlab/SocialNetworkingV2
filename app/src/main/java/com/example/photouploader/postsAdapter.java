@@ -69,6 +69,12 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
         final String currentUserID = prefs.getString("userID", "NULL");
         final String currentUserName = prefs.getString("name", "NULL");
         holder.postDescView.setText(myList.getDesc());
+        //Log.i("desc", myList.getDesc());
+
+        //String img = (myList.getImg());
+        //if (img !=null)
+        //    Log.i("img", img);
+
         Picasso.get().load(myList.getImg()).into(holder.postImgView);
         postRef.child(myList.getPostID()).child("likes").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

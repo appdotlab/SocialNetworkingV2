@@ -41,9 +41,9 @@ public class AddPostFragment extends Fragment {
 
     Button chooseBtn, uploadBtn;
     ImageView imageView;
-    private Uri filePath;
+    private Uri filePath, imgPath;
     FirebaseStorage storage;
-    StorageReference storageReference;
+    StorageReference storageReference, ref2;
     DatabaseReference postRef;
     SharedPreferences prefs;
 
@@ -57,7 +57,10 @@ public class AddPostFragment extends Fragment {
         imageView = (ImageView) view.findViewById(R.id.imageView);
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        ref2 = storage.getReference();
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        final String id = prefs.getString("userID", "N/A");
+
         choose();
         upload();
         return view;
@@ -77,20 +80,22 @@ public class AddPostFragment extends Fragment {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(filePath != null)
                 {
                     final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
                     progressDialog.setTitle("Uploading...");
                     progressDialog.show();
-
-                    StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+                    final String id = prefs.getString("userID", "N/A");
+                    final StorageReference ref = storageReference.child("images/"+id+"/"+ UUID.randomUUID().toString());
                     ref.putFile(filePath)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     progressDialog.dismiss();
                                     Toast.makeText(getActivity().getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-                                    uploadSuccess();
+
+                                    uploadSuccess(ref);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -108,7 +113,14 @@ public class AddPostFragment extends Fragment {
                                     progressDialog.setMessage("Uploaded "+(int)progress+"%");
                                 }
                             });
+
                 }
+
+
+//                final String id = prefs.getString("userID", "N/A");
+//                imgPath = ref2.child("images/"+id+"/"+ UUID.randomUUID().toString()).getDownloadUrl().getResult();
+//                String img = String.valueOf(imgPath);
+//                Log.i("img", img);
             }
         });
     }
@@ -131,11 +143,30 @@ public class AddPostFragment extends Fragment {
         }
     }
 
-    private void uploadSuccess(){
-        String userID = prefs.getString("userID", "N/A");
-        postRef = FirebaseDatabase.getInstance().getReference().child("Posts").push();
-        postRef.child("userID").setValue(userID);
-        postRef.child("url").setValue(String.valueOf(filePath));
+    private void uploadSuccess(StorageReference ref){
+       final String userID = prefs.getString("userID", "N/A");
+
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+
+                postRef = FirebaseDatabase.getInstance().getReference().child("Posts").push();
+                postRef.child("userID").setValue(userID);
+                String img = String.valueOf(uri);
+                Log.i("Img",img);
+                postRef.child("url").setValue(img);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
+
+
     }
 
 }

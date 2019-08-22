@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
                     postModel model = new postModel();
                     String desc = postSnapshot.child("desc").getValue(String.class);
-                    String img = postSnapshot.child("img").getValue(String.class);
+                    String img = postSnapshot.child("url").getValue(String.class);
                     String userID = postSnapshot.child("userID").getValue(String.class);
                     String postID = postSnapshot.getKey();
                     ArrayList<String> likes = new ArrayList<>();

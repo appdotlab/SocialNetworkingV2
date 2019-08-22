@@ -46,6 +46,10 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
 
     public postsAdapter(List<postModel> modelList, String currentUserID, Context context, FragmentManager fragmentManager)
     {
+//        if (list!=null)
+//        {
+//            list.clear();
+//        }
         this.list = modelList;
         this.context = context;
         this.currentUserID = currentUserID;

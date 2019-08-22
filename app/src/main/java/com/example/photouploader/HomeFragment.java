@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         postRef = database.getReference();
-        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        postRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 postList = new ArrayList<postModel>();

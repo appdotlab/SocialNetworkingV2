@@ -36,7 +36,7 @@ import java.util.List;
 public class UserProfile extends Fragment implements editProfileDialog.editProfileDialogListener {
 
     TextView usernameText, followersText, followingText,bioText;
-    Button editProfileBtn;
+    Button editProfileBtn, logoutBtn;
     SharedPreferences prefs;
     List<postModel> postModelLists;
     DatabaseReference userRef, postRef;
@@ -51,6 +51,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         followersText = (TextView) view.findViewById(R.id.followersText);
         followingText = (TextView) view.findViewById(R.id.followingText);
         editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
+        logoutBtn = (Button) view.findViewById(R.id.logoutBtn);
         bioText = (TextView) view.findViewById(R.id.bioText);
         postView = (RecyclerView) view.findViewById(R.id.postView);
 
@@ -106,7 +107,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         });
 
         updateUI();
-
+        logout();
         editProfile();
         return view;
     }
@@ -156,6 +157,19 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    public void logout(){
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prefs.edit()
+                        .remove("userID")
+                        .remove("name")
+                        .apply();
+                startActivity(new Intent(getContext(), loginActivity.class));
             }
         });
     }

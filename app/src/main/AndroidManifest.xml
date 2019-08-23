@@ -15,9 +15,6 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".loginActivity" />
-        <activity
-            android:name=".BottomNav"
-            android:label="@string/title_activity_bottom_nav" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -25,7 +25,7 @@ public class ProfileFragment extends Fragment {
     TextView name, age;
     userModel user;
     Button followBtn, unfollowBtn;
-    DatabaseReference followers, following, followers2, following2, currentUser;
+    DatabaseReference followers, following, followers2, following2, currentUser, notiRef;
     SharedPreferences prefs;
     @Nullable
     @Override
@@ -88,6 +88,9 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Followed", Toast.LENGTH_SHORT).show();
                 unfollowBtn.setVisibility(View.VISIBLE);
                 followBtn.setVisibility(View.GONE);
+                notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(user.getUserID()).push();
+                notiRef.child("type").setValue("follow");
+                notiRef.child("userID").setValue(currentUserID);
             }
         });
     }

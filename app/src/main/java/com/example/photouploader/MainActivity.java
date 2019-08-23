@@ -21,31 +21,27 @@ public class MainActivity extends AppCompatActivity
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
-            Boolean islogout = false;
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     selectedFragment = new HomeFragment();
                     break;
-                case R.id.navigation_newPost:
-                    selectedFragment = new AddPostFragment();
-                    break;
-                case R.id.navigation_profile:
-                    Log.w("Clicked","worked");
-                    selectedFragment = new UserProfile();
-                    break;
-                case R.id.navigation_temp:
-                    selectedFragment = new SearchFragment();
-                    islogout = true;
-                    break;
                 case R.id.navigation_Search:
                     selectedFragment = new SearchFragment();
                     break;
+                case R.id.navigation_newPost:
+                    selectedFragment = new AddPostFragment();
+                    break;
+
+                case R.id.navigation_notification:
+                    selectedFragment = new NotificationFragment();
+                    break;
+
+                case R.id.navigation_profile:
+                    selectedFragment = new UserProfile();
+                    break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragments_container, selectedFragment).commit();
-            if(islogout == true) {
-                logout();
-            }
             return true;
         }
     };
@@ -63,13 +59,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void logout(){
-        prefs.edit()
-                .remove("userID")
-                .remove("name")
-                .apply();
-        startActivity(new Intent(getApplicationContext(), loginActivity.class));
-    }
 
     @Override
     public void onBackPressed() {

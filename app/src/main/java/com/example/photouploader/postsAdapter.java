@@ -34,14 +34,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerViewHolder> {
 
     List<postModel> list;
     Context context;
     String currentUserID;
     SharedPreferences prefs;
-    DatabaseReference postRef;
+    DatabaseReference postRef,notiRef;
     FragmentManager fragmentManager;
 
     public postsAdapter(List<postModel> modelList, String currentUserID, Context context, FragmentManager fragmentManager)
@@ -126,6 +125,10 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
                 holder.postLikeBtn.setVisibility(View.GONE);
                 holder.postUnlikeBtn.setVisibility(View.VISIBLE);
                 updateLike(holder, myList.getPostID());
+                notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID()).push();
+                notiRef.child("type").setValue("like");
+                notiRef.child("userID").setValue(currentUserID);
+
             }
         });
         holder.postUnlikeBtn.setOnClickListener(new View.OnClickListener() {

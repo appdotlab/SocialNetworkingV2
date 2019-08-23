@@ -17,9 +17,9 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="New Post" />
     <item
-        android:id="@+id/navigation_temp"
+        android:id="@+id/navigation_notification"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="temp" />
+        android:title="Notification" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_notifications_black_24dp"

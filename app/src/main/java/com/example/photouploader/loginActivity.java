@@ -44,7 +44,6 @@ public class loginActivity extends AppCompatActivity
     GoogleSignInClient mGoogleSignInClient;
     DatabaseReference mDatabase, currentUser, userRef;
     SharedPreferences prefs;
-    Task<Void> currentRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,7 +72,13 @@ public class loginActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
-
+/*
+        FirebaseUser user = mAuth.getCurrentUser();
+        final String email = user.getEmail();
+        final String uID = user.getUid();
+        Log.i("User", email + " " + uID);
+        Toast.makeText(this, "Email : " + email, Toast.LENGTH_SHORT).show();
+*/
         login();
         register();
 
@@ -104,8 +109,33 @@ public class loginActivity extends AppCompatActivity
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                if (account != null) firebaseAuthWithGoogle(account);
+                final GoogleSignInAccount account = task.getResult(ApiException.class);
+                userRef = mDatabase.child("Users");
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Boolean userExists = false;
+                        String email = account.getEmail();
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            if(email.compareTo((String) userSnapshot.child("email").getValue()) == 0){
+                                userExists = true;
+                                break;
+                            }
+                        }
+                        if(userExists == true){
+                            if (account != null) firebaseAuthWithGoogle(account);
+                        }
+                        else{
+                            Toast.makeText(loginActivity.this, "Account Doesn't Exist", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                Log.i("Account", String.valueOf(account.getEmail()));
             } catch (ApiException e) {
                 Log.w("TAG", "Google sign in failed", e);
             }
@@ -115,35 +145,8 @@ public class loginActivity extends AppCompatActivity
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
-
         final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        FirebaseUser user = mAuth.getCurrentUser();
-        final String email = user.getEmail();
-        userRef = mDatabase.child("Users");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Boolean userExists = false;
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                    if(email.compareTo((String) userSnapshot.child("email").getValue()) == 0){
-                        userExists = true;
-                        break;
-                    }
-                }
-
-                if(userExists == true){
-                    mAuthLogin(credential);
-                }
-                else{
-                    Toast.makeText(loginActivity.this, "Account Doesn't Exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        mAuthLogin(credential);
 
     }
 
@@ -195,9 +198,6 @@ public class loginActivity extends AppCompatActivity
             Intent i = new Intent(loginActivity.this,MainActivity.class);
             startActivity(i);
             finish();
-
-
-
         }
     }
 
@@ -284,7 +284,7 @@ public class loginActivity extends AppCompatActivity
         });
     }
 
-    public void Logout() {
+    public void logout() {
         // Firebase sign out
         mAuth.signOut();
 

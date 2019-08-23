@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -169,6 +170,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
                         .remove("userID")
                         .remove("name")
                         .apply();
+                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), loginActivity.class));
             }
         });

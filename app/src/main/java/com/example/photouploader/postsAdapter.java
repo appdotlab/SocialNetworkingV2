@@ -114,7 +114,7 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.e("Error", String.valueOf(databaseError));
             }
         });
         holder.postUnlikeBtn.setVisibility(View.GONE);
@@ -125,9 +125,34 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
                 holder.postLikeBtn.setVisibility(View.GONE);
                 holder.postUnlikeBtn.setVisibility(View.VISIBLE);
                 updateLike(holder, myList.getPostID());
-                notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID()).push();
-                notiRef.child("type").setValue("like");
-                notiRef.child("userID").setValue(currentUserID);
+
+                notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID());
+                notiRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Boolean exists = false;
+                        for(DataSnapshot notiSnapshot : dataSnapshot.getChildren()){
+                            String userID = String.valueOf(notiSnapshot.child("userID").getValue());
+                            String postID = String.valueOf(notiSnapshot.child("postID").getValue());
+                            if(userID.compareTo(currentUserID) == 0 && postID.compareTo(myList.getPostID()) == 0){
+                                Log.i("MSG","Notification Cancelled");
+                                exists = true;
+                            }
+                        }
+                        if(exists == false) {
+                            Log.i("MSG","Notified");
+                            notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID()).push();
+                            notiRef.child("type").setValue("like");
+                            notiRef.child("userID").setValue(currentUserID);
+                            notiRef.child("postID").setValue(myList.getPostID());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("Error", String.valueOf(databaseError));
+                    }
+                });
 
             }
         });
@@ -145,7 +170,7 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Log.e("Error", String.valueOf(databaseError));
                     }
                 });
             }

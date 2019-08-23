@@ -99,7 +99,32 @@ public class registerActivity extends AppCompatActivity
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
+                final GoogleSignInAccount account = task.getResult(ApiException.class);
+                userRef = mDatabase.child("Users");
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Boolean userExists = false;
+                        String email = account.getEmail();
+                        for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+                            if(email.compareTo((String) userSnapshot.child("email").getValue()) == 0){
+                                userExists = true;
+                                break;
+                            }
+                        }
+                        if(userExists == false){
+                            if (account != null) firebaseAuthWithGoogle(account);
+                        }
+                        else{
+                            Toast.makeText(registerActivity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 if (account != null) firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Log.w("TAG", "Google sign in failed", e);
@@ -109,35 +134,9 @@ public class registerActivity extends AppCompatActivity
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("TAGsss", "firebaseAuthWithGoogle:" + acct.getId());
-
+        Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
         final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        FirebaseUser user = mAuth.getCurrentUser();
-        final String email = user.getEmail();
-        userRef = mDatabase.child("Users");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Boolean userExists = false;
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()){
-                    if(email.compareTo((String) userSnapshot.child("email").getValue()) == 0){
-                        Toast.makeText(registerActivity.this, "Account Already Exists", Toast.LENGTH_SHORT).show();
-                        userExists = true;
-                        break;
-                    }
-                }
-
-                if(userExists == false){
-                    mAuthLogin(credential);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        mAuthLogin(credential);
     }
 
     public void mAuthLogin(AuthCredential credential){

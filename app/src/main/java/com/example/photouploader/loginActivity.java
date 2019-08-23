@@ -170,6 +170,7 @@ public class loginActivity extends AppCompatActivity
     }
 
     public void updateUI(FirebaseUser user) {
+        Log.i("User", String.valueOf(user));
         if (user != null) {
             final String userID = user.getUid();
             currentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("name");
@@ -181,6 +182,7 @@ public class loginActivity extends AppCompatActivity
                             .putString("name", String.valueOf(dataSnapshot.getValue()))
                             .putString("userID", userID)
                             .apply();
+                    Log.i("User", "Logged In");
                 }
 
                 @Override
@@ -190,7 +192,7 @@ public class loginActivity extends AppCompatActivity
             });
 
             Toast.makeText(loginActivity.this, "Logged In successfully", Toast.LENGTH_LONG).show();
-            Intent i = new Intent(loginActivity.this,loginActivity.class);
+            Intent i = new Intent(loginActivity.this,MainActivity.class);
             startActivity(i);
             finish();
 

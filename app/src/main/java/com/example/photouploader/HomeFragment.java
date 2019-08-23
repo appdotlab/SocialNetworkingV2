@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
                 String userID = prefs.getString("userID","N/A");
                 Log.i("Count", "Count : " + postList.size());
                 FragmentManager fragmentManager = getFragmentManager();
-                recyclerView.setAdapter(new postsAdapter((postList), userID, getActivity(), fragmentManager));
+                recyclerView.setAdapter(new postsAdapter((postList), userID, getActivity(), fragmentManager, false));
 
             }
 

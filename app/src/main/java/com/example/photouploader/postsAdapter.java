@@ -42,17 +42,15 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
     SharedPreferences prefs;
     DatabaseReference postRef,notiRef;
     FragmentManager fragmentManager;
+    Boolean isCurrentUserProfile;
 
-    public postsAdapter(List<postModel> modelList, String currentUserID, Context context, FragmentManager fragmentManager)
+    public postsAdapter(List<postModel> modelList, String currentUserID, Context context, FragmentManager fragmentManager, Boolean isCurrentUserProfile)
     {
-//        if (list!=null)
-//        {
-//            list.clear();
-//        }
         this.list = modelList;
         this.context = context;
         this.currentUserID = currentUserID;
         this.fragmentManager = fragmentManager;
+        this.isCurrentUserProfile = isCurrentUserProfile;
     }
 
     @NonNull
@@ -79,103 +77,109 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
         //    Log.i("img", img);
 
         Picasso.get().load(myList.getImg()).into(holder.postImgView);
-        postRef.child(myList.getPostID()).child("likes").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int likes = 0;
-                String likeText;
-                for(DataSnapshot likeSnapshot : dataSnapshot.getChildren()){
-                    if(currentUserID.compareTo(likeSnapshot.getKey()) == 0){
-                        holder.postUnlikeBtn.setVisibility(View.VISIBLE);
-                        holder.postLikeBtn.setVisibility(View.GONE);
+        if(isCurrentUserProfile){
+            holder.postLikeBtn.setVisibility(View.INVISIBLE);
+            holder.postUnlikeBtn.setVisibility(View.INVISIBLE);
+            holder.postLikesText.setVisibility(View.INVISIBLE);
+        }
+        else{
+            postRef.child(myList.getPostID()).child("likes").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int likes = 0;
+                    String likeText;
+                    for(DataSnapshot likeSnapshot : dataSnapshot.getChildren()){
+                        if(currentUserID.compareTo(likeSnapshot.getKey()) == 0){
+                            holder.postUnlikeBtn.setVisibility(View.VISIBLE);
+                            holder.postLikeBtn.setVisibility(View.GONE);
+                        }
+                        likes++;
                     }
-                    likes++;
-                }
-                likeText = likes == 1 ? "1 like" : likes + " likes";
-                holder.postLikesText.setText(likeText);
-                if(likes > 0){
-                    holder.postLikesText.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Fragment fragment = new LikesFragment();
-                            Bundle data = new Bundle();
-                            data.putStringArrayList("likes", myList.getLikes());
-                            data.putString("postID", myList.getPostID());
-                            fragment.setArguments(data);
+                    likeText = likes == 1 ? "1 like" : likes + " likes";
+                    holder.postLikesText.setText(likeText);
+                    if(likes > 0){
+                        holder.postLikesText.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Fragment fragment = new LikesFragment();
+                                Bundle data = new Bundle();
+                                data.putStringArrayList("likes", myList.getLikes());
+                                data.putString("postID", myList.getPostID());
+                                fragment.setArguments(data);
 
-                            fragmentManager.beginTransaction()
-                                    .replace(R.id.fragments_container, fragment)
-                                    .addToBackStack("tag")
-                                    .commit();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.fragments_container, fragment)
+                                        .addToBackStack("tag")
+                                        .commit();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Error", String.valueOf(databaseError));
+                }
+            });
+            holder.postUnlikeBtn.setVisibility(View.GONE);
+            holder.postLikeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    postRef.child(myList.getPostID()).child("likes").child(currentUserID).setValue(currentUserName);
+                    holder.postLikeBtn.setVisibility(View.GONE);
+                    holder.postUnlikeBtn.setVisibility(View.VISIBLE);
+                    updateLike(holder, myList.getPostID());
+
+                    notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID());
+                    notiRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Boolean exists = false;
+                            for(DataSnapshot notiSnapshot : dataSnapshot.getChildren()){
+                                String userID = String.valueOf(notiSnapshot.child("userID").getValue());
+                                String postID = String.valueOf(notiSnapshot.child("postID").getValue());
+                                if(userID.compareTo(currentUserID) == 0 && postID.compareTo(myList.getPostID()) == 0){
+                                    Log.i("MSG","Notification Cancelled");
+                                    exists = true;
+                                }
+                            }
+                            if(exists == false) {
+                                Log.i("MSG","Notified");
+                                notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID()).push();
+                                notiRef.child("type").setValue("like");
+                                notiRef.child("userID").setValue(currentUserID);
+                                notiRef.child("postID").setValue(myList.getPostID());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("Error", String.valueOf(databaseError));
+                        }
+                    });
+
+                }
+            });
+            holder.postUnlikeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    postRef.child(myList.getPostID()).child("likes").child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            dataSnapshot.getRef().removeValue();
+                            holder.postUnlikeBtn.setVisibility(View.GONE);
+                            holder.postLikeBtn.setVisibility(View.VISIBLE);
+                            updateLike(holder, myList.getPostID());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("Error", String.valueOf(databaseError));
                         }
                     });
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Error", String.valueOf(databaseError));
-            }
-        });
-        holder.postUnlikeBtn.setVisibility(View.GONE);
-        holder.postLikeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postRef.child(myList.getPostID()).child("likes").child(currentUserID).setValue(currentUserName);
-                holder.postLikeBtn.setVisibility(View.GONE);
-                holder.postUnlikeBtn.setVisibility(View.VISIBLE);
-                updateLike(holder, myList.getPostID());
-
-                notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID());
-                notiRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Boolean exists = false;
-                        for(DataSnapshot notiSnapshot : dataSnapshot.getChildren()){
-                            String userID = String.valueOf(notiSnapshot.child("userID").getValue());
-                            String postID = String.valueOf(notiSnapshot.child("postID").getValue());
-                            if(userID.compareTo(currentUserID) == 0 && postID.compareTo(myList.getPostID()) == 0){
-                                Log.i("MSG","Notification Cancelled");
-                                exists = true;
-                            }
-                        }
-                        if(exists == false) {
-                            Log.i("MSG","Notified");
-                            notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(myList.getUserID()).push();
-                            notiRef.child("type").setValue("like");
-                            notiRef.child("userID").setValue(currentUserID);
-                            notiRef.child("postID").setValue(myList.getPostID());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("Error", String.valueOf(databaseError));
-                    }
-                });
-
-            }
-        });
-        holder.postUnlikeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postRef.child(myList.getPostID()).child("likes").child(currentUserID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        dataSnapshot.getRef().removeValue();
-                        holder.postUnlikeBtn.setVisibility(View.GONE);
-                        holder.postLikeBtn.setVisibility(View.VISIBLE);
-                        updateLike(holder, myList.getPostID());
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("Error", String.valueOf(databaseError));
-                    }
-                });
-            }
-        });
-
+            });
+        }
     }
 
 

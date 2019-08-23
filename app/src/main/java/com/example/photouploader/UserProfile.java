@@ -96,8 +96,8 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
                 }
                 String userID = prefs.getString("userID","N/A");
                 Log.i("Count", "Count : " + postModelLists.size());
-                FragmentManager fm = getFragmentManager();
-                postView.setAdapter(new postsAdapter((postModelLists), userID, getActivity(), fm));
+                FragmentManager FM = getFragmentManager();
+                postView.setAdapter(new postsAdapter((postModelLists), userID, getActivity(), FM, true));
 
             }
 

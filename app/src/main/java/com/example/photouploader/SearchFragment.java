@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,20 +27,31 @@ import java.util.List;
 
 public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
+    SearchView searchView;
     DatabaseReference userRef;
     List<userModel> userList;
     SharedPreferences prefs;
+    FragmentManager fragmentManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        searchView = (SearchView) view.findViewById(R.id.searchView);
         prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        userRef = database.getReference().child("Users");
+        searchView.setIconifiedByDefault(false);
+        searchView.requestFocus();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,7 +74,7 @@ public class SearchFragment extends Fragment {
                         userList.add(user);
                     }
                 }
-                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager = getFragmentManager();
                 recyclerView.setAdapter(new searchAdapter(userList, getActivity(), fragmentManager));
             }
 
@@ -72,6 +84,32 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        return view;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search(s);
+                return false;
+            }
+        });
+    }
+
+    private  void search(String str){
+        Log.i("search", str);
+        List<userModel> searchUserList = new ArrayList<userModel>();
+        for(userModel user : userList){
+            if(user.getName().toLowerCase().contains(str.toLowerCase())){
+                searchUserList.add(user);
+                Log.i("search", "user found");
+            }
+            else{
+                Log.i("search", "user not found");
+            }
+        }
+        recyclerView.setAdapter(new searchAdapter(searchUserList, getActivity(), fragmentManager));
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat">
+
+    <TextView
+        android:id="@+id/chatHeader"
+        android:text="Messages "
+        android:textSize="30dp"
+        android:layout_alignParentLeft="true"
+        android:shadowColor="@color/cardview_dark_background"
+        android:shadowRadius="@android:integer/config_shortAnimTime"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
+
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/chatView"
+     android:layout_below="@+id/chatHeader"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</RelativeLayout>

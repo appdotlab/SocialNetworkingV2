@@ -52,7 +52,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         followersText = (TextView) view.findViewById(R.id.followersText);
         followingText = (TextView) view.findViewById(R.id.followingText);
         editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
-        logoutBtn = (Button) view.findViewById(R.id.logoutBtn);
+        logoutBtn = (Button) view.findViewById(R.id.logout);
         bioText = (TextView) view.findViewById(R.id.bioText);
         postView = (RecyclerView) view.findViewById(R.id.postView);
 

@@ -44,6 +44,7 @@ public class editProfileDialog extends AppCompatDialogFragment {
                         String name = editName.getText().toString();
                         Log.w("lol", name);
                         String bio = editBio.getText().toString();
+                        Log.w("lol", bio);
                         listener.applyTexts(name,bio);
                     }
                 });

@@ -1,16 +1,20 @@
 package com.example.photouploader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,12 +29,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  {
 
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
     RecyclerView recyclerView;
     DatabaseReference postRef;
     List<postModel> postList;
     SharedPreferences prefs;
+    Button messageButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,8 +46,29 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        messageButton = (Button) view.findViewById(R.id.button);
 
+
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(),chat.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                startActivity(i);
+
+            }
+        });
         prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+
+        //Gesture Trial
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//
+//            }
+//        });
+
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         postRef = database.getReference();
@@ -90,4 +119,5 @@ public class HomeFragment extends Fragment {
         return view;
 
     }
+
 }

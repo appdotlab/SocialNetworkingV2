@@ -26,7 +26,7 @@ import java.util.List;
 
 
 public class chat extends AppCompatActivity {
-
+    public static Context context;
     RecyclerView chatlist;
     DatabaseReference userRef;
     List<userModel> userList;
@@ -36,7 +36,7 @@ public class chat extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
-
+        context = this;
         chatlist = (RecyclerView) findViewById(R.id.chatView);
         chatlist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -76,6 +76,7 @@ public class chat extends AppCompatActivity {
                     }
                 }
                 chatlist.setAdapter(new chatAdapter(userList,getApplicationContext() ));
+
                 Log.i("lol", "entered after setting adapter");
 
             }
@@ -86,5 +87,6 @@ public class chat extends AppCompatActivity {
             }
         });
     }
+//
 }
 

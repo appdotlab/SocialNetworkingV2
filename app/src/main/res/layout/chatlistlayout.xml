@@ -5,10 +5,9 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/rl"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/dp"
@@ -16,28 +15,25 @@
             android:layout_height="65dp"
 
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+
         <TextView
             android:id="@+id/userText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="gg"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/dp"/>
-
+            android:layout_toRightOf="@+id/dp"
+            android:text="gg"
+            android:textSize="20dp" />
 
 
         <TextView
+            android:id="@+id/messagecount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/messagecount"
-            android:text="xmessages"
             android:layout_below="@+id/userText"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/dp"/>
-
-
-
+            android:layout_toRightOf="@+id/dp"
+            android:text="xmessages" />
 
 
     </RelativeLayout>

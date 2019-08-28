@@ -30,7 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class messageActivity extends AppCompatActivity {
+    public  static  messageActivity instance = null;
     SharedPreferences prefs;
 //    DatabaseReference userRef, ref2;
     LinearLayout layout;
@@ -39,14 +41,30 @@ public class messageActivity extends AppCompatActivity {
     EditText messageArea;
     ScrollView scrollView;
     DatabaseReference reference1, reference2;
+    String otherID,otherName;
 
+//    messageActivity()
+//    {}
+
+//    messageActivity(String otherID, String otherName)
+//    {
+//        this.otherID = otherID;
+//        this.otherName = otherName;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        prefs = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         Intent intent = getIntent();
+        final String currentUserID = prefs.getString("userID","N/A");
+        final String currUserName = prefs.getString("name", "N/A");
+        final String receiverID = intent.getStringExtra("otherID");
+        final String recieverName = intent.getStringExtra("otherName");
+
+
         layout = (LinearLayout) findViewById(R.id.linear);
         layout_2 = (RelativeLayout)findViewById(R.id.relative);
         sendButton = (ImageView)findViewById(R.id.sendButton);
@@ -54,12 +72,8 @@ public class messageActivity extends AppCompatActivity {
         scrollView = (ScrollView)findViewById(R.id.scrollView);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        Intent intent =new Intent() ;
-        prefs = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
-        final String currentUserID = prefs.getString("userID","N/A");
-        final String currUserName = prefs.getString("name", "N/A");
-        final String receiverID = intent.getStringExtra("otherID");
-        final String recieverName = intent.getStringExtra("otherName");
+
         Log.i("Other ID", receiverID);
 
         reference1 = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserID);
@@ -76,7 +90,9 @@ public class messageActivity extends AppCompatActivity {
                 if(!messageText.equals("")){
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("Message", messageText);
+                    Log.i("ms", messageText);
                     map.put("Sender", currUserName);
+                    //map.put("Receiver",recieverName);
                     Log.i("name", currUserName);
 //                    map.put("user", UserDetails.username);
                     reference1.push().setValue(map);
@@ -97,7 +113,7 @@ public class messageActivity extends AppCompatActivity {
                     addMessageBox("You:-\n" + message, 1);
                 }
                 else{
-                    addMessageBox(receiverID + ":-\n" + message, 2);
+                    addMessageBox(recieverName + ":-\n" + message, 2);
                 }
             }
 
@@ -121,7 +137,9 @@ public class messageActivity extends AppCompatActivity {
 
             }
      });
+
     }
+
 
     public void addMessageBox(String message, int type){
         TextView textView = new TextView(messageActivity.this);
@@ -142,5 +160,9 @@ public class messageActivity extends AppCompatActivity {
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
+
+
+
+
 }
 

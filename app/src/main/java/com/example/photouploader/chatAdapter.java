@@ -20,7 +20,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
 
     List<userModel> userList;
     Context context;
-    final int FLAG_ACTIVITY_NEW_TASK = 0;
+//    messageActivity mg;
 
     public chatAdapter(List<userModel> userList, Context context) {
         this.userList = userList;
@@ -48,12 +48,17 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
         holder.name.setText(user.getName());
         final String id = user.getUserID();
         final String name = user.getName();
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i;
-                i = new Intent(view.getContext(), messageActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                chat ch = new chat();
+//                chat.intent();
+
+//                mg = new messageActivity(id,name);
+                Intent i = new Intent(view.getContext(), messageActivity.class);
+
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                 i.putExtra("otherName", name);
                 i.putExtra("otherID", id);
 

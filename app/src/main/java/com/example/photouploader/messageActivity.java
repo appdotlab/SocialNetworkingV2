@@ -3,12 +3,14 @@ package com.example.photouploader;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -26,15 +28,17 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class messageActivity extends AppCompatActivity {
     public  static  messageActivity instance = null;
     SharedPreferences prefs;
-//    DatabaseReference userRef, ref2;
     LinearLayout layout;
     RelativeLayout layout_2;
     ImageView sendButton;
@@ -42,8 +46,11 @@ public class messageActivity extends AppCompatActivity {
     ScrollView scrollView;
     DatabaseReference reference1, reference2;
     String otherID,otherName;
+    List<messageModel> messageModelList;
+    RecyclerView messageView;
+//    DatabaseReference userRef, ref2;
 
-//    messageActivity()
+    //    messageActivity()
 //    {}
 
 //    messageActivity(String otherID, String otherName)
@@ -61,9 +68,22 @@ public class messageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String currentUserID = prefs.getString("userID","N/A");
         final String currUserName = prefs.getString("name", "N/A");
-        final String receiverID = intent.getStringExtra("otherID");
-        final String recieverName = intent.getStringExtra("otherName");
 
+        final String receiverID = intent.getStringExtra("otherID");
+
+        messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext());
+        messageView = (RecyclerView) findViewById(R.id.messageView);
+        messageView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        //messageView.setAdapter(recyclerAdapter);
+        messageView.setHasFixedSize(true);
+        prefs.edit()
+                .putString("recieverID",receiverID)
+                .apply();
+
+        final String recieverName = intent.getStringExtra("otherName");
+        prefs.edit()
+                .putString("recieverName",recieverName)
+                .apply();
 
         layout = (LinearLayout) findViewById(R.id.linear);
         layout_2 = (RelativeLayout)findViewById(R.id.relative);
@@ -71,98 +91,98 @@ public class messageActivity extends AppCompatActivity {
         messageArea = (EditText)findViewById(R.id.editMessage);
         scrollView = (ScrollView)findViewById(R.id.scrollView);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        reference1 = database.getReference("Messages").child(currentUserID+receiverID);
 //        Intent intent =new Intent() ;
 
 
         Log.i("Other ID", receiverID);
 
-        reference1 = FirebaseDatabase.getInstance().getReference().child("Messages").child(currentUserID);
-        reference2 = FirebaseDatabase.getInstance().getReference().child("Messages").child(receiverID);
-
-        // reference1 = new Firebase("https://androidchatapp-76776.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
-//        reference2 = new Firebase("https://androidchatapp-76776.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
+      sendButton.setOnClickListener(new View.OnClickListener()
+      {
             @Override
             public void onClick(View v) {
                 String messageText = messageArea.getText().toString();
-
-                if(!messageText.equals("")){
+                if(!messageText.equals(""))
+                {
+//                    messageModel messageModel = new messageModel();
+//
+//                    messageModel.setSenderID(currentUserID);
+//                    messageModel.setSenderName(currUserName);
+//                    messageModel.setMesssage(messageText);
+//                    messageModel.setRecieverName(recieverName);
+//                    messageModel.setRecieverID(receiverID);
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("Message", messageText);
                     Log.i("ms", messageText);
                     map.put("Sender", currUserName);
-                    //map.put("Receiver",recieverName);
+                    map.put("Receiver",recieverName);
                     Log.i("name", currUserName);
-//                    map.put("user", UserDetails.username);
+////                    map.put("user", UserDetails.username);
+//                    reference1.child("Sender").setValue(messageModel.getSenderName());
+//                    reference1.child("SenderID").setValue(messageModel.getSenderID());
+//                    reference1.child("Reciever").setValue(messageModel.getRecieverName());
+//                    reference1.child("RecieverID").setValue(messageModel.getRecieverID());
+//                    reference1.child("Message").setValue(messageModel.getMesssage());
+//                    messageModelList.add(messageModel);
                     reference1.push().setValue(map);
-                    reference2.push().setValue(map);
-                    messageArea.setText("");
+//                    reference2.push().setValue(map);
+
+                    reference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            messageModelList = new ArrayList<messageModel>();
+
+                            for (DataSnapshot snap : dataSnapshot.getChildren())
+                            {
+                                messageModel model = new messageModel();
+
+                                String Sender = snap.child("Sender").getValue(String.class);
+
+                                String Receiver = snap.child("Receiver").getValue(String.class);
+
+                                String message = snap.child("Message").getValue(String.class);
+
+                                model.setSenderName(Sender);
+                                Log.i("Sending to adapter", Sender);
+                                model.setRecieverName(Receiver);
+                                Log.i("Sending to adapter", Receiver);
+                                model.setMesssage(message);
+                                Log.i("Sending to adapter", message);
+                                messageArea.setText("");
+                                messageModelList.add(model);
+
+                                if (messageModelList.size() != 0 ) {
+                                    Log.i("lmao", "0");
+
+                                }
+                            }
+                            messageView.setAdapter(new messageAdapter(messageModelList, getApplicationContext()));
+
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+
+
+//                    reference2.child("Sender").setValue(messageModel.getSenderName());
+//                    reference2.child("SenderID").setValue(messageModel.getSenderID());
+//                    reference2.child("Reciever").setValue(messageModel.getRecieverName());
+//                    reference2.child("RecieverID").setValue(messageModel.getRecieverID());
+//                    reference2.child("Message").setValue(messageModel.getMesssage());
+//
                 }
             }
         });
 
-        reference1.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                String message = map.get("Message").toString();
-                String userName = map.get("Sender").toString();
-
-                if(userName.equals(currUserName)){
-                    addMessageBox("You:-\n" + message, 1);
-                }
-                else{
-                    addMessageBox(recieverName + ":-\n" + message, 2);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-     });
 
     }
-
-
-    public void addMessageBox(String message, int type){
-        TextView textView = new TextView(messageActivity.this);
-        textView.setText(message);
-
-        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp2.weight = 1.0f;
-
-        if(type == 1) {
-            lp2.gravity = Gravity.LEFT;
-           // textView.setBackgroundResource(R.drawable.bubble_in);
-        }
-        else{
-            lp2.gravity = Gravity.RIGHT;
-//            textView.setBackgroundResource(R.drawable.bubble_out);
-        }
-        textView.setLayoutParams(lp2);
-        layout.addView(textView);
-        scrollView.fullScroll(View.FOCUS_DOWN);
-    }
-
-
-
-
 }
 

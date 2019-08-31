@@ -37,7 +37,6 @@ import java.util.Map;
 
 
 public class messageActivity extends AppCompatActivity {
-    public  static  messageActivity instance = null;
     SharedPreferences prefs;
     LinearLayout layout;
     RelativeLayout layout_2;
@@ -85,8 +84,6 @@ public class messageActivity extends AppCompatActivity {
                 .putString("recieverName",recieverName)
                 .apply();
 
-        layout = (LinearLayout) findViewById(R.id.linear);
-        layout_2 = (RelativeLayout)findViewById(R.id.relative);
         sendButton = (ImageView)findViewById(R.id.sendButton);
         messageArea = (EditText)findViewById(R.id.editMessage);
         scrollView = (ScrollView)findViewById(R.id.scrollView);

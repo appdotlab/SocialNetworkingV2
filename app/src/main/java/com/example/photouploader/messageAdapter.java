@@ -27,7 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 import java.util.Map;
 
-public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recyclerViewHolder> {
+public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recyclerViewHolder>
+{
     List<messageModel> list;
     Context context;
     SharedPreferences prefs;
@@ -69,24 +70,33 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     @Override
     public void onBindViewHolder(@NonNull recyclerViewHolder holder, int position) {
         {
-            final messageModel msg = list.get(position);
-            String sender = msg.getSenderID();
-            Log.i("Data", sender);
-            String receiver = msg.getRecieverID();
-            Log.i("Data", receiver);
-
-            if (sender.compareTo(receiver)==0)
+            messageModel msg = list.get(position);
+            if (msg != null)
             {
-                addMessageBox(msg.messsage,2);
-                Log.i("Data", "called");
+                String sender = msg.getSenderID();
+                if (sender != null)
+                {
+                    Log.i("Data", null);
 
-            }
-            else
-            {
-                addMessageBox(msg.messsage,1);
-                Log.i("Data", "called2");
+                }
+                String receiver = msg.getRecieverID();
+                Log.i("Data", receiver);
+                if (sender.compareTo(receiver)==0)
+                {
+                    addMessageBox(msg.messsage,2);
+                    Log.i("Data", "called");
 
+                }
+                else
+                {
+                    addMessageBox(msg.messsage,1);
+                    Log.i("Data", "called2");
+
+                }
             }
+
+
+
 
 //        reference1.addChildEventListener(new ChildEventListener() {
 //            @Override

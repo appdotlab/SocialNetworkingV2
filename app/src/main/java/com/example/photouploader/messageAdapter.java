@@ -18,40 +18,87 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 
 public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recyclerViewHolder>
 {
+    public static final int MSG_TYPE_LEFT = 0;
+    public static final int MSG_TYPE_RIGHT = 1;
+    List<messageModel> modelList;
+    Context context;
+    SharedPreferences prefs;
+
+    public String currID, receiverID;
+
+    public messageAdapter(List<messageModel> modelList, Context context) {
+        this.modelList = modelList;
+        this.context = context;
+    }
+
     @NonNull
     @Override
-    public messageAdapter.recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public messageAdapter.recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        if (i == MSG_TYPE_RIGHT)
+        {
+            View view = LayoutInflater.from(context).inflate(R.layout.chat_right_layout, parent, false);
+            return new messageAdapter.recyclerViewHolder(view);
+        }
+        else
+        {
+            View view = LayoutInflater.from(context).inflate(R.layout.chat_left_layout, parent, false);
+            return new messageAdapter.recyclerViewHolder(view);
+        }
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull messageAdapter.recyclerViewHolder holder, int position) {
-
+        messageModel model = modelList.get(position);
+        Log.i("help", model.getMessage());
+        holder.show_message.setText(model.getMessage());
+        prefs = context.getSharedPreferences("Prefs",context.MODE_PRIVATE);
+        currID = prefs.getString("userID", "N/A");
+        receiverID = prefs.getString("recieverID", "N/A");
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return modelList.size();
     }
 
     public messageAdapter() {
     }
 
-    public class recyclerViewHolder extends RecyclerView.ViewHolder{
+    public class recyclerViewHolder extends RecyclerView.ViewHolder
+    {
+        public TextView show_message;
         public recyclerViewHolder(@NonNull View itemView)
         {
             super(itemView);
+            show_message = (TextView) itemView.findViewById(R.id.show_message);
+        }
+    }
+    @Override
+    public int getItemViewType(int position)
+    {
+
+        if(modelList.get(position).getSenderID().equals(currID))
+        {
+            return MSG_TYPE_RIGHT;
+        }
+        else
+        {
+            return MSG_TYPE_LEFT;
         }
     }
 }

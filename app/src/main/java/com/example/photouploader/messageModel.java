@@ -1,37 +1,18 @@
 package com.example.photouploader;
 
 public class messageModel  {
-    String senderName;
     String SenderID;
-    String RecieverName;
     String RecieverID;
+    boolean isseen;
+    String message;
+    String messageID;
 
-    public String getRecieverName() {
-        return RecieverName;
+    public String getMessageID() {
+        return messageID;
     }
 
-    public void setRecieverName(String recieverName) {
-        RecieverName = recieverName;
-    }
-
-    public String getMesssage() {
-        return messsage;
-    }
-
-    public void setMesssage(String messsage) {
-        this.messsage = messsage;
-    }
-
-    String messsage;
-
-
-
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
     }
 
     public String getSenderID() {
@@ -42,19 +23,27 @@ public class messageModel  {
         SenderID = senderID;
     }
 
-    public String getRecievernName() {
-        return RecieverName;
-    }
-
-    public void setRecievernName(String recievernName) {
-        RecieverName = recievernName;
-    }
-
     public String getRecieverID() {
         return RecieverID;
     }
 
     public void setRecieverID(String recieverID) {
         RecieverID = recieverID;
+    }
+
+    public boolean isIsseen() {
+        return isseen;
+    }
+
+    public void setIsseen(boolean isseen) {
+        this.isseen = isseen;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

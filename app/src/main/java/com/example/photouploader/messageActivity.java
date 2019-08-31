@@ -119,21 +119,24 @@ public class messageActivity extends AppCompatActivity {
     private void readMesagges(final String myid, final String userid) {
         messageModelList = new ArrayList<>();
 
-        reference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 messageModelList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     messageModel model = new messageModel();
+                    messageModel messagemodel = snapshot.getValue(messageModel.class);
                     String rID = snapshot.child("receiver").getValue(String.class);
                     Log.i("lol", rID);
                     String sID = snapshot.child("sender").getValue(String.class);
                     Log.i("lol sender",sID);
-                    if (rID == myid && sID==(userid) ||
-                            rID==(userid) && sID==(myid)) {
-                        //messageModelList.add(messagemodel);
+
+                    if (sID == myid && rID==(userid) || sID==(userid) && rID==(myid)) {
+                        messageModelList.add(messagemodel);
                         Log.i("wow", "noice");
+                        Log.i("wow", rID);
+                        Log.i("wow", sID);
                     }
 
                     messageAdapter adapter = new messageAdapter(messageModelList, messageActivity.this);

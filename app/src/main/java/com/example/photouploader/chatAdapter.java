@@ -16,7 +16,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHolder> {
+public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHolder>
+{
+    @NonNull
+    @Override
+    public chatAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull chatAdapter.RecyclerViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder{
+        public RecyclerViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+}
+
+/*
 
     List<userModel> userList;
     Context context;
@@ -85,4 +110,4 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
         }
 
     }
-}
+ */

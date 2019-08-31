@@ -26,7 +26,43 @@ import java.util.List;
 
 
 public class chat extends AppCompatActivity {
-    public static Context context;
+
+    RecyclerView chatView;
+    String currUserID, currUserName;
+    SharedPreferences prefs;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.chat);
+
+        prefs = getSharedPreferences("Prefs",MODE_PRIVATE);
+        currUserID = prefs.getString("userID","N/A");
+//        currUserName = prefs.getString("")
+        chatView = (RecyclerView) findViewById(R.id.chatView);
+        chatView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        chatView.setHasFixedSize(true);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+}
+
+/*
+public static Context context;
     RecyclerView chatlist;
     DatabaseReference userRef;
     List<userModel> userList;
@@ -87,6 +123,4 @@ public class chat extends AppCompatActivity {
             }
         });
     }
-//
-}
-
+ */

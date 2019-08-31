@@ -94,6 +94,7 @@ public class messageActivity extends AppCompatActivity {
 
         Log.i("Other ID", receiverID);
 
+
       sendButton.setOnClickListener(new View.OnClickListener()
       {
             @Override

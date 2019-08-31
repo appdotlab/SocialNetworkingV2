@@ -29,6 +29,34 @@ import java.util.Map;
 
 public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recyclerViewHolder>
 {
+    @NonNull
+    @Override
+    public messageAdapter.recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull messageAdapter.recyclerViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    public messageAdapter() {
+    }
+
+    public class recyclerViewHolder extends RecyclerView.ViewHolder{
+        public recyclerViewHolder(@NonNull View itemView)
+        {
+            super(itemView);
+        }
+    }
+}
+/*public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recyclerViewHolder>
+{
     List<messageModel> list;
     Context context;
     SharedPreferences prefs;
@@ -53,44 +81,32 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
 
 
         View view = LayoutInflater.from(context).inflate(R.layout.messagetext, parent,false);
-//
-//
-//        final String currentUserID = prefs.getString("userID", "N/A");
-//        final String receiverID = prefs.getString("recieverID", "N/A");
-//        final String currUserName = prefs.getString("name", "N/A");
-//        final String receiverName = prefs.getString("recieverName", "N/A");
-           Log.i("Data", "lol");
-        if (list.size() != 0 ) {
-            Log.i("lmao1", "1");
 
-        }
+
         return new messageAdapter.recyclerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull recyclerViewHolder holder, int position) {
         {
+
             messageModel msg = list.get(position);
             if (msg != null)
             {
-                String sender = msg.getSenderID();
-                if (sender != null)
-                {
-                    Log.i("Data", null);
+                prefs = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+                final String currUserName = prefs.getString("name", "N/A");
 
-                }
-                String receiver = msg.getRecieverID();
-                Log.i("Data", receiver);
-                if (sender.compareTo(receiver)==0)
+                String sender = msg.getSenderName();
+                String receiver = msg.getRecieverName();
+                if (sender.compareTo(currUserName)==0)
                 {
                     addMessageBox(msg.messsage,2);
-                    Log.i("Data", "called");
+
 
                 }
                 else
                 {
                     addMessageBox(msg.messsage,1);
-                    Log.i("Data", "called2");
 
                 }
             }
@@ -146,8 +162,10 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
         return list.size();
     }
     public void addMessageBox(String messageStr, int type) {
-
+//        TextView textView = new TextView(context);
+//        textView.setText(messageStr);
         message.setText(messageStr);
+
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp2.weight = 1.0f;
 
@@ -167,9 +185,8 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
         public recyclerViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.messageText);
-            Log.i("Data", "lmao");
 
 
         }
     }
-}
+}*/

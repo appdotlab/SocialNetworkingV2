@@ -6,6 +6,46 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/rl2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/postAuthorNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:text="Author Name"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/postDescText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="18sp"
+            android:layout_below="@+id/postAuthorNameText"/>
+
+        <TextView
+            android:id="@+id/viewCommentsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/postDescText"
+            android:text="View all Comments"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -34,20 +74,11 @@
             android:layout_marginTop="0dp"
             android:text="Unlike" />
 
-        <TextView
-            android:id="@+id/postTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="Post" />
-
         <ImageView
             android:id="@+id/postImg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_below="@+id/postTitle"
+            android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 

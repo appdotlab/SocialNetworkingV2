@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment  {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Get Data", "Not Working");
+                Log.e("Get Data", String.valueOf(databaseError));
             }
         });
         return view;

@@ -40,7 +40,7 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
     Context context;
     String currentUserID;
     SharedPreferences prefs;
-    DatabaseReference postRef,notiRef;
+    DatabaseReference postRef,notiRef, userRef;
     FragmentManager fragmentManager;
     Boolean isCurrentUserProfile;
 
@@ -69,14 +69,28 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
         prefs = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         final String currentUserID = prefs.getString("userID", "NULL");
         final String currentUserName = prefs.getString("name", "NULL");
-        holder.postDescView.setText(myList.getDesc());
-        //Log.i("desc", myList.getDesc());
-
-        //String img = (myList.getImg());
-        //if (img !=null)
-        //    Log.i("img", img);
-
+        if(myList.getDesc() != null){
+            holder.postDescView.setText(myList.getDesc());
+        }
+        else{
+            holder.postDescView.setVisibility(View.GONE);
+        }
         Picasso.get().load(myList.getImg()).into(holder.postImgView);
+
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(myList.getUserID()).child("name");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String name = String.valueOf(dataSnapshot.getValue());
+                holder.postAuthorNameText.setText("@" + name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Get Data", String.valueOf(databaseError));
+            }
+        });
+
         if(isCurrentUserProfile){
             holder.postLikeBtn.setVisibility(View.INVISIBLE);
             holder.postUnlikeBtn.setVisibility(View.INVISIBLE);
@@ -106,7 +120,6 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
                                 data.putStringArrayList("likes", myList.getLikes());
                                 data.putString("postID", myList.getPostID());
                                 fragment.setArguments(data);
-
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.fragments_container, fragment)
                                         .addToBackStack("tag")
@@ -179,6 +192,19 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
                     });
                 }
             });
+
+            holder.viewCommentsText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Fragment fragment = new CommentsFragment();
+                    Bundle data = new Bundle();
+                    data.putString("postID",myList.getPostID());
+                    fragment.setArguments(data);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragments_container, fragment)
+                            .commit();
+                }
+            });
         }
     }
 
@@ -210,14 +236,16 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
-        TextView postDescView, postLikesText;
+        TextView postDescView, postLikesText, postAuthorNameText, viewCommentsText;
         ImageView postImgView;
         Button postLikeBtn, postUnlikeBtn;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            postDescView = (TextView) itemView.findViewById(R.id.postTitle);
+            postDescView = (TextView) itemView.findViewById(R.id.postDescText);
+            postAuthorNameText = (TextView) itemView.findViewById(R.id.postAuthorNameText);
+            viewCommentsText = (TextView) itemView.findViewById(R.id.viewCommentsText);
             postImgView = (ImageView) itemView.findViewById(R.id.postImg);
             postLikeBtn = (Button) itemView.findViewById(R.id.likeBtn);
             postUnlikeBtn = (Button) itemView.findViewById(R.id.unlikeBtn);

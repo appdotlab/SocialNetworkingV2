@@ -66,9 +66,8 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
                 Intent i = new Intent(view.getContext(), messageActivity.class);
 
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
-                i.putExtra("otherName", name);
-                Log.i("other", name);
-                i.putExtra("otherID", id);
+                i.putExtra("otherName", user.getUserID());
+                i.putExtra("otherID", user.getName());
 
                 context.startActivity(i);
 

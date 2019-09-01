@@ -65,13 +65,11 @@ public class chat extends AppCompatActivity {
                     Log.i("user : " , userID);
                     if(userID.compareTo(currentUserID) != 0){
                         userList.add(user);
-                        Log.i("lol", "entered task in chat");
 
                     }
                 }
                 chatlist.setAdapter(new chatAdapter(userList,getApplicationContext()));
 
-                Log.i("lol", "entered after setting adapter");
 
             }
 

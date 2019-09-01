@@ -36,8 +36,8 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     List<messageModel> modelList;
     Context context;
     SharedPreferences prefs;
-
     public String currID, receiverID;
+
 
     public messageAdapter(List<messageModel> modelList, Context context) {
         this.modelList = modelList;
@@ -47,6 +47,7 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     @NonNull
     @Override
     public messageAdapter.recyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        receiverID = prefs.getString("recieverID", "N/A");
         if (i == MSG_TYPE_RIGHT)
         {
             View view = LayoutInflater.from(context).inflate(R.layout.chat_right_layout, parent, false);
@@ -62,21 +63,16 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     }
 
     @Override
-    public void onBindViewHolder(@NonNull messageAdapter.recyclerViewHolder holder, int position) {
-        messageModel model = modelList.get(position);
-        Log.i("help", model.getMessage());
-        holder.show_message.setText(model.getMessage());
-        prefs = context.getSharedPreferences("Prefs",context.MODE_PRIVATE);
-        currID = prefs.getString("userID", "N/A");
-        receiverID = prefs.getString("recieverID", "N/A");
+    public void onBindViewHolder(@NonNull messageAdapter.recyclerViewHolder holder, final int i)
+    {
+       messageModel model = modelList.get(i);
+       holder.show_message.setText(model.getMessage());
+
     }
 
     @Override
     public int getItemCount() {
         return modelList.size();
-    }
-
-    public messageAdapter() {
     }
 
     public class recyclerViewHolder extends RecyclerView.ViewHolder
@@ -91,8 +87,17 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     @Override
     public int getItemViewType(int position)
     {
+        prefs = context.getSharedPreferences("Prefs",context.MODE_PRIVATE);
 
-        if(modelList.get(position).getSenderID().equals(currID))
+        currID = prefs.getString("userID", "N/A");
+
+        if (modelList.get(position)!= null)
+        {
+            Log.i("lol", "Not null");
+        }
+        Log.i("CurrID", currID);
+        Log.i("semder", modelList.get(position).getSender());
+        if(modelList.get(position).getSenderID() == currID)
         {
             return MSG_TYPE_RIGHT;
         }

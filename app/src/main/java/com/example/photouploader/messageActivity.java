@@ -23,6 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.FirebaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +41,7 @@ import java.util.Map;
 public class messageActivity extends AppCompatActivity {
     SharedPreferences prefs;
 
+    TextView username;
     ImageView sendButton;
     EditText messageArea;
 
@@ -80,6 +82,7 @@ public class messageActivity extends AppCompatActivity {
 
         sendButton = (ImageView) findViewById(R.id.sendButton);
         messageArea = (EditText) findViewById(R.id.editMessage);
+        username = (TextView) findViewById(R.id.username);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
@@ -97,6 +100,31 @@ public class messageActivity extends AppCompatActivity {
             }
         });
 
+        reference = database.getReference("Users").child(currentUserID);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                userModel user = new userModel();
+                String userID = dataSnapshot.getKey();
+
+                user.setUserID(userID);
+                Log.i("wth", user.getUserID());
+                Log.i("current", currentUserID);
+                Log.i("receiver", receiverID);
+
+                Log.i("Sent", "Works?");
+
+                readMesagges(currentUserID,receiverID );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -112,8 +140,6 @@ public class messageActivity extends AppCompatActivity {
         hashMap.put("message", msgText);
         hashMap.put("isseen", false);
         reference.child("Chats").push().setValue(hashMap);
-        Log.i("curr", currID);
-        readMesagges(currID, ReceiverID);
     }
 
     private void readMesagges(final String myid, final String userid) {
@@ -124,19 +150,15 @@ public class messageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 messageModelList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    messageModel model = new messageModel();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
                     messageModel messagemodel = snapshot.getValue(messageModel.class);
-                    String rID = snapshot.child("receiver").getValue(String.class);
-                    Log.i("lol", rID);
-                    String sID = snapshot.child("sender").getValue(String.class);
-                    Log.i("lol sender",sID);
 
-                    if (sID == myid && rID==(userid) || sID==(userid) && rID==(myid)) {
+                    if (messagemodel.getSender() == myid && messagemodel.getReceiver()==(userid) || messagemodel.getSender()==(userid) && messagemodel.getReceiver()==(myid))
+                    {
                         messageModelList.add(messagemodel);
-                        Log.i("wow", "noice");
-                        Log.i("wow", rID);
-                        Log.i("wow", sID);
+                        Log.i("wow", "setToAdapter");
+
                     }
 
                     messageAdapter adapter = new messageAdapter(messageModelList, messageActivity.this);

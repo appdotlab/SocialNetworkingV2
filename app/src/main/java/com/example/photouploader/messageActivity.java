@@ -85,7 +85,6 @@ public class messageActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.username);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,10 +113,9 @@ public class messageActivity extends AppCompatActivity {
                 Log.i("wth", user.getUserID());
                 Log.i("current", currentUserID);
                 Log.i("receiver", receiverID);
-
                 Log.i("Sent", "Works?");
 
-                readMesagges(currentUserID,receiverID );
+                readMesagges(currentUserID,receiverID);
             }
 
             @Override
@@ -153,11 +151,14 @@ public class messageActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     messageModel messagemodel = snapshot.getValue(messageModel.class);
-
-                    if (messagemodel.getSender() == myid && messagemodel.getReceiver()==(userid) || messagemodel.getSender()==(userid) && messagemodel.getReceiver()==(myid))
+                    Log.i("MSGsss", "Receiver ID : " + messagemodel.getReceiver());
+                    Log.i("MSGsss", "User ID : " + userid);
+                    Log.i("MSGsss", "Sender ID : " + messagemodel.getSender());
+                    Log.i("MSGsss", "My ID : " + myid);
+                    if (((messagemodel.getSender().compareTo(myid) == 0) && (messagemodel.getReceiver().compareTo(userid) == 0)) || ((messagemodel.getSender().compareTo(userid) == 0) && (messagemodel.getReceiver().compareTo(myid) == 0)))
                     {
                         messageModelList.add(messagemodel);
-                        Log.i("wow", "setToAdapter");
+                        Log.i("MSGsss", "setToAdapter");
 
                     }
 

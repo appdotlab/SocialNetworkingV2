@@ -90,15 +90,11 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
         prefs = context.getSharedPreferences("Prefs",context.MODE_PRIVATE);
 
         currID = prefs.getString("userID", "N/A");
-
-        if (modelList.get(position)!= null)
-        {
-            Log.i("lol", "Not null");
-        }
         Log.i("CurrID", currID);
-        Log.i("semder", modelList.get(position).getSender());
-        if(modelList.get(position).getSenderID() == currID)
+        Log.i("semderwwwwwwwww", modelList.get(position).getSender());
+        if((modelList.get(position).getSender()).compareTo(currID) == 0 )
         {
+            Log.i("User sending", "Message sent by user");
             return MSG_TYPE_RIGHT;
         }
         else

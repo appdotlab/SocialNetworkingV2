@@ -65,7 +65,6 @@ public class messageActivity extends AppCompatActivity {
         final String receiverID = intent.getStringExtra("otherID");
         final String recieverName = intent.getStringExtra("otherName");
 
-
         messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext());
         messageView = (RecyclerView) findViewById(R.id.messageView);
         messageView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -123,9 +122,6 @@ public class messageActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     public void sendMessage(final String currID, final String ReceiverID, String msgText) {

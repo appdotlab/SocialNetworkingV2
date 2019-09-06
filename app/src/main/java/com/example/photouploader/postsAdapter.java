@@ -95,6 +95,9 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
             holder.postLikeBtn.setVisibility(View.INVISIBLE);
             holder.postUnlikeBtn.setVisibility(View.INVISIBLE);
             holder.postLikesText.setVisibility(View.INVISIBLE);
+            holder.viewCommentsText.setVisibility(View.INVISIBLE);
+            holder.postDescView.setVisibility(View.INVISIBLE);
+            holder.postAuthorNameText.setVisibility(View.INVISIBLE);
         }
         else{
             postRef.child(myList.getPostID()).child("likes").addListenerForSingleValueEvent(new ValueEventListener() {

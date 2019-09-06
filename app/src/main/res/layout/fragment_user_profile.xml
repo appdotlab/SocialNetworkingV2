@@ -8,141 +8,160 @@
     tools:context=".UserProfile"
     tools:visibility="visible">
 
-    <ImageView
-        android:id="@+id/dp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="14dp"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
-
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:layout_marginTop="20dp"-->
-
-    <TextView
-        android:id="@+id/bar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@+id/bioText"
-        android:layout_marginTop="0dp" />
+        android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/postView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/bar"
-        android:visibility="visible"
-        tools:listitem="@android:layout/activity_list_item" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/usernameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginLeft="22dp"
-        android:layout_marginTop="30dp"
-        android:layout_toEndOf="@+id/dp"
-        android:layout_toRightOf="@+id/dp"
-        android:text="Name"
-        android:textSize="18sp" />
+            <RelativeLayout
+                android:id="@+id/headPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/usernameEdit2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="55dp"
-        android:layout_toEndOf="@+id/usernameEdit3"
-        android:layout_toRightOf="@+id/usernameEdit3"
-        android:text="Following"
-        android:textSize="17sp" />
+                <Button
+                    android:id="@+id/editProfileBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/usernameText"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_toEndOf="@+id/dp"
+                    android:layout_toRightOf="@+id/dp"
+                    android:text="Edit Profile" />
 
-    <TextView
-        android:id="@+id/usernameEdit3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dp"
-        android:layout_alignStart="@+id/bar"
-        android:layout_alignLeft="@+id/bar"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="55dp"
-        android:text="Followers"
-        android:textSize="17sp" />
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/usernameText"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="69dp"
+                    android:layout_toEndOf="@+id/dp"
+                    android:layout_toRightOf="@+id/dp"
+                    android:background="@color/fui_bgEmail"
+                    android:text="Logout"
+                    android:textColor="@android:color/white" />
 
-    <TextView
-        android:id="@+id/followingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dp"
-        android:layout_marginStart="71dp"
-        android:layout_marginLeft="71dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/followersText"
-        android:layout_toRightOf="@+id/followersText"
-        android:text="25"
-        android:textSize="30sp" />
+                <ImageView
+                    android:id="@+id/dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
 
-    <TextView
-        android:id="@+id/followersText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="47dp"
-        android:layout_marginLeft="47dp"
-        android:layout_marginTop="10dp"
-        android:text="10"
-        android:textSize="30sp" />
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="14dp"
+                    app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
-    <Button
-        android:id="@+id/editProfileBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/usernameText"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/dp"
-        android:layout_toRightOf="@+id/dp"
-        android:text="Edit Profile" />
+                <TextView
+                    android:id="@+id/usernameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_toEndOf="@+id/dp"
+                    android:layout_toRightOf="@+id/dp"
+                    android:text="Name"
+                    android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/usernameText"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="69dp"
-        android:layout_toEndOf="@+id/dp"
-        android:layout_toRightOf="@+id/dp"
-        android:background="@color/fui_bgEmail"
-        android:text="Logout"
-        android:textColor="@android:color/white" />
+            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/bioText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/followersText"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="Bio"
-        android:textSize="25dp" />
+            <LinearLayout
+                android:id="@+id/numberPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="90">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="30"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/usernameEdit4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Posts"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/postsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textSize="30sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="30"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/usernameEdit2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Following"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/followingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="25"
+                        android:textSize="30sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="30"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/usernameEdit3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Following"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/followersText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        android:textSize="30sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/postView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:listitem="@android:layout/activity_list_item" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

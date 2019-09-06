@@ -92,12 +92,12 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
         });
 
         if(isCurrentUserProfile){
-            holder.postLikeBtn.setVisibility(View.INVISIBLE);
-            holder.postUnlikeBtn.setVisibility(View.INVISIBLE);
-            holder.postLikesText.setVisibility(View.INVISIBLE);
-            holder.viewCommentsText.setVisibility(View.INVISIBLE);
-            holder.postDescView.setVisibility(View.INVISIBLE);
-            holder.postAuthorNameText.setVisibility(View.INVISIBLE);
+            holder.postLikeBtn.setVisibility(View.GONE);
+            holder.postUnlikeBtn.setVisibility(View.GONE);
+            holder.postLikesText.setVisibility(View.GONE);
+            holder.viewCommentsText.setVisibility(View.GONE);
+            holder.postDescView.setVisibility(View.GONE);
+            holder.postAuthorNameText.setVisibility(View.GONE);
         }
         else{
             postRef.child(myList.getPostID()).child("likes").addListenerForSingleValueEvent(new ValueEventListener() {

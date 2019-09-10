@@ -38,6 +38,15 @@ public class HomeFragment extends Fragment  {
     List<postModel> postList;
     SharedPreferences prefs;
     Button messageButton;
+    String currentPostID = null;
+
+    public HomeFragment(String postID) {
+        currentPostID = postID;
+    }
+
+    public HomeFragment() {
+
+    }
 
     @Nullable
     @Override
@@ -47,8 +56,6 @@ public class HomeFragment extends Fragment  {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         messageButton = (Button) view.findViewById(R.id.button);
-
-
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +65,11 @@ public class HomeFragment extends Fragment  {
 
             }
         });
+
+        if(currentPostID != null){
+            messageButton.setVisibility(View.GONE);
+        }
+
         prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
         //Gesture Trial
@@ -98,9 +110,17 @@ public class HomeFragment extends Fragment  {
                     model.setImg(img);
                     model.setLikes(likes);
                     model.setPostID(postSnapshot.getKey());
-                    for (DataSnapshot userSnapshot : dataSnapshot.child("Users").child(currentUserID).child("following").getChildren()){
-                        if(userID.compareTo(userSnapshot.getKey()) == 0){
+
+                    if(currentPostID != null){
+                        if(postID.compareTo(currentPostID) == 0){
                             postList.add(0,model);
+                        }
+                    }
+                    else {
+                        for (DataSnapshot userSnapshot : dataSnapshot.child("Users").child(currentUserID).child("following").getChildren()) {
+                            if (userID.compareTo(userSnapshot.getKey()) == 0) {
+                                postList.add(0, model);
+                            }
                         }
                     }
                 }

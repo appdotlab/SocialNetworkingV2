@@ -98,6 +98,7 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
             holder.viewCommentsText.setVisibility(View.GONE);
             holder.postDescView.setVisibility(View.GONE);
             holder.postAuthorNameText.setVisibility(View.GONE);
+            postIntent(myList.getPostID(), holder);
         }
         else{
             postRef.child(myList.getPostID()).child("likes").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -272,6 +273,23 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    private void postIntent(final String postID, RecyclerViewHolder holder){
+        holder.postImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new HomeFragment(postID);
+                /*
+                Bundle data = new Bundle();
+                data.putString("postID",myList.getPostID());
+                fragment.setArguments(data);
+                */
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragments_container, fragment)
+                        .commit();
             }
         });
     }

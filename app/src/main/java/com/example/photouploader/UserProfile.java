@@ -58,6 +58,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
+        postView.hasNestedScrollingParent();
         postView.setLayoutManager(gridLayoutManager);
         Log.i("Entered", "before");
         postRef = FirebaseDatabase.getInstance().getReference().child("Posts");

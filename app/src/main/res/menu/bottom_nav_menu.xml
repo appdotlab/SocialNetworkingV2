@@ -9,19 +9,20 @@
 
     <item
         android:id="@+id/navigation_Search"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@android:drawable/ic_search_category_default"
         android:title="Search" />
-
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/userdefault"
+        android:title="Profile" />
+    <item
+        android:id="@+id/navigation_notification"
+        android:icon="@drawable/likefragment"
+        android:title="Notification" />
     <item
         android:id="@+id/navigation_newPost"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="New Post" />
-    <item
-        android:id="@+id/navigation_notification"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Notification" />
-    <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="Profile" />
+
+
 </menu>

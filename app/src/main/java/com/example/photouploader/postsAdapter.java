@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -242,7 +243,7 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
 
         TextView postDescView, postLikesText, postAuthorNameText, viewCommentsText;
         ImageView postImgView;
-        Button postLikeBtn, postUnlikeBtn;
+        ImageButton postLikeBtn, postUnlikeBtn;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -251,8 +252,8 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
             postAuthorNameText = (TextView) itemView.findViewById(R.id.postAuthorNameText);
             viewCommentsText = (TextView) itemView.findViewById(R.id.viewCommentsText);
             postImgView = (ImageView) itemView.findViewById(R.id.postImg);
-            postLikeBtn = (Button) itemView.findViewById(R.id.likeBtn);
-            postUnlikeBtn = (Button) itemView.findViewById(R.id.unlikeBtn);
+            postLikeBtn = (ImageButton) itemView.findViewById(R.id.likeBtn);
+            postUnlikeBtn = (ImageButton) itemView.findViewById(R.id.unlikeBtn);
             postLikesText = (TextView) itemView.findViewById(R.id.likesText);
         }
     }

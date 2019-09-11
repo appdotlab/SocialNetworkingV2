@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".messageActivity"></activity>
+        <activity android:name=".profileInfoActivity"></activity>
+        <activity android:name=".messageActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".registerActivity" />
         <activity android:name=".loginActivity" />
@@ -22,9 +23,12 @@
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileFragment extends Fragment {
-    TextView name, age;
+    TextView name, age , followText, followingText;
+    CircleImageView dp;
     userModel user;
-    Button followBtn, unfollowBtn;
+    ImageButton followBtn, unfollowBtn;
     DatabaseReference followers, following, followers2, following2, currentUser, notiRef;
     SharedPreferences prefs;
     @Nullable
@@ -35,10 +39,14 @@ public class ProfileFragment extends Fragment {
         user.setAge(getArguments().getString("age"));
         user.setUserID(getArguments().getString("userID"));
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        dp =  (CircleImageView) view.findViewById(R.id.img);
         name = (TextView) view.findViewById(R.id.name);
         age = (TextView) view.findViewById(R.id.age);
-        followBtn = (Button) view.findViewById(R.id.followBtn);
-        unfollowBtn = (Button) view.findViewById(R.id.unfollowBtn);
+        followBtn = (ImageButton) view.findViewById(R.id.followBtn);
+        unfollowBtn = (ImageButton) view.findViewById(R.id.unfollowBtn);
+        followText = (TextView) view.findViewById(R.id.followText);
+        followingText = (TextView) view.findViewById(R.id.followingText);
+
         prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         setProfile();
         follow();
@@ -50,6 +58,8 @@ public class ProfileFragment extends Fragment {
         name.setText(user.name);
         age.setText(user.age);
         unfollowBtn.setVisibility(View.GONE);
+        followingText.setVisibility(View.GONE);
+        followText.setVisibility(View.VISIBLE);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         String currentUserID = prefs.getString("userID", "N/A");
 
@@ -61,6 +71,8 @@ public class ProfileFragment extends Fragment {
                     if(user.getUserID().compareTo(userSnapshot.getKey()) == 0){
                         unfollowBtn.setVisibility(View.VISIBLE);
                         followBtn.setVisibility(View.GONE);
+                        followingText.setVisibility(View.VISIBLE);
+                        followText.setVisibility(View.GONE);
                     }
                 }
             }
@@ -88,6 +100,8 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "Followed", Toast.LENGTH_SHORT).show();
                 unfollowBtn.setVisibility(View.VISIBLE);
                 followBtn.setVisibility(View.GONE);
+                followingText.setVisibility(View.VISIBLE);
+                followText.setVisibility(View.GONE);
                 notiRef = FirebaseDatabase.getInstance().getReference().child("Notifications").child(user.getUserID()).push();
                 notiRef.child("type").setValue("follow");
                 notiRef.child("userID").setValue(currentUserID);
@@ -130,6 +144,8 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "Unfollowed", Toast.LENGTH_SHORT).show();
                 unfollowBtn.setVisibility(View.GONE);
                 followBtn.setVisibility(View.VISIBLE);
+                followingText.setVisibility(View.GONE);
+                followText.setVisibility(View.VISIBLE);
             }
         });
     }

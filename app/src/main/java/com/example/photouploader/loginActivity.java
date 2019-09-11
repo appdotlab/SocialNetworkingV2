@@ -195,9 +195,21 @@ public class loginActivity extends AppCompatActivity
             });
 
             Toast.makeText(loginActivity.this, "Logged In successfully", Toast.LENGTH_LONG).show();
-            Intent i = new Intent(loginActivity.this,MainActivity.class);
-            startActivity(i);
-            finish();
+            Log.i("YO", toString().valueOf(user.getMetadata().getCreationTimestamp()));
+            Log.i("YO", toString().valueOf(user.getMetadata().getLastSignInTimestamp()));
+
+            if (user.getMetadata().getCreationTimestamp()==user.getMetadata().getLastSignInTimestamp()|| user.getMetadata().getLastSignInTimestamp()==0)
+            {
+                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+                startActivity(i);
+                finish();
+            }
+            else
+            {
+                Intent i = new Intent(loginActivity.this,MainActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
     }
 
@@ -266,12 +278,27 @@ public class loginActivity extends AppCompatActivity
                                 });
 
 
-                                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("email", txt_email);
+                                Log.i("YO", toString().valueOf(firebaseUser.getMetadata().getCreationTimestamp()));
+                                Log.i("YO", toString().valueOf(firebaseUser.getMetadata().getLastSignInTimestamp()));
 
-                                startActivity(intent);
-                                finish();
+                                if (firebaseUser.getMetadata().getCreationTimestamp()==firebaseUser.getMetadata().getLastSignInTimestamp()|| firebaseUser.getMetadata().getLastSignInTimestamp()==0)
+                                {
+                                    Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    i.putExtra("email", txt_email);
+
+                                    startActivity(i);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.putExtra("email", txt_email);
+
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }
                             else
                             {

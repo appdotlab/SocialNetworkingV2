@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+
         android:id="@+id/img"
         android:layout_width="128dp"
         android:layout_height="128dp"
@@ -13,7 +15,11 @@
         android:layout_marginStart="25dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="25dp"
-        app:srcCompat="@drawable/bear_avatar" />
+        android:visibility="visible"
+        android:src="@drawable/bear_avatar"
+    />
+
+
 
     <TextView
         android:id="@+id/age"
@@ -26,7 +32,8 @@
         android:layout_toEndOf="@+id/img"
         android:layout_toRightOf="@+id/img"
         android:text="Age"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/name"
@@ -39,31 +46,85 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="19dp"
         android:text="Name"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:visibility="visible" />
 
-    <Button
+    <ImageButton
         android:id="@+id/followBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
         android:layout_below="@+id/age"
-        android:layout_marginStart="42dp"
-        android:layout_marginLeft="41dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="21dp"
         android:layout_toEndOf="@+id/img"
         android:layout_toRightOf="@+id/img"
-        android:text="Follow" />
+        android:background="#00FFFFFF"
+        android:src="@drawable/follow"
 
-    <Button
-        android:id="@+id/unfollowBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginLeft="42dp"
-        android:layout_marginTop="91dp"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/followText"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
+        android:layout_below="@+id/age"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="21dp"
         android:layout_toEndOf="@+id/img"
         android:layout_toRightOf="@+id/img"
-        android:background="@color/colorAccent"
-        android:text="Unfollow"
-        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="top"
+        android:lineSpacingExtra="20sp"
+        android:text="Follow"
+        android:textAlignment="center"
+
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/followingText"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
+        android:layout_below="@+id/age"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="19dp"
+        android:layout_toEndOf="@+id/img"
+        android:layout_toRightOf="@+id/img"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="top"
+        android:lineSpacingExtra="20sp"
+        android:text="Following"
+        android:textAlignment="center"
+        android:textColor="#FF8A72"
+        android:textSize="15sp"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/unfollowBtn"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="124dp"
+        android:layout_height="31dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="89dp"
+        android:layout_toEndOf="@+id/img"
+
+        android:layout_toRightOf="@+id/img"
+        android:adjustViewBounds="false"
+        android:background="#00FFFFFF"
+        android:cropToPadding="false"
+        android:elevation="10dp"
+        android:gravity="top"
+        android:scaleType="fitCenter"
+        android:scaleX="1.09"
+        android:scaleY="1.09"
+        android:src="@drawable/following"
+        android:visibility="visible" />
 </RelativeLayout>

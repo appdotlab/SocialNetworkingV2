@@ -274,6 +274,7 @@ public class registerActivity extends AppCompatActivity
                     prefs.edit()
                             .putString("name", username)
                             .putString("userID", userid)
+                            .putBoolean("firstSignIn",true)
                             .apply();
                     Intent i = new Intent(registerActivity.this,loginActivity.class);
                     startActivity(i);

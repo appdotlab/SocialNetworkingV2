@@ -24,20 +24,25 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class UserProfile extends Fragment implements editProfileDialog.editProfileDialogListener {
 
     TextView usernameText, followersText, followingText,bioText;
     Button editProfileBtn, logoutBtn;
+    CircleImageView DP;
     SharedPreferences prefs;
     List<postModel> postModelLists;
     DatabaseReference userRef, postRef;
@@ -54,9 +59,9 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
         logoutBtn = (Button) view.findViewById(R.id.logout);
         postView = (RecyclerView) view.findViewById(R.id.postView);
-
+        DP = (CircleImageView) view.findViewById(R.id.dp) ;
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
-
+        String img = prefs.getString("img","N/A");
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2);
         postView.hasNestedScrollingParent();
         postView.setLayoutManager(gridLayoutManager);
@@ -114,10 +119,10 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
     }
 
 
-    public void openDialog() {
-        editProfileDialog editProfileDialog = new editProfileDialog();
-        editProfileDialog.show(getActivity().getSupportFragmentManager(), "editProfile dialog");
-    }
+//    public void openDialog() {
+//        editProfileDialog editProfileDialog = new editProfileDialog();
+//        editProfileDialog.show(getActivity().getSupportFragmentManager(), "editProfile dialog");
+//    }
 
     @Override
     public void applyTexts(String name, String bio) {
@@ -130,7 +135,10 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
             @Override
             public void onClick(View view) {
 
-                openDialog();
+                Intent i = new Intent(getActivity().getApplicationContext(), profileInfoActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+
 
             }
         });
@@ -139,10 +147,15 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
     private void updateUI(){
         String userID = prefs.getString("userID", "N/A");
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = String.valueOf(dataSnapshot.child("name").getValue());
+                String img = String.valueOf(dataSnapshot.child("DpLink").getValue());
+                prefs.edit()
+                        .putString("img",img)
+                        .apply();
+                String bio = String.valueOf(dataSnapshot.child("Bio").getValue());
                 int followersCount = 0, followingCount = 0;
                 for(DataSnapshot userSnapshot : dataSnapshot.child("followers").getChildren()){
                     followersCount++;
@@ -150,7 +163,9 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
                 for(DataSnapshot userSnapshot : dataSnapshot.child("following").getChildren()){
                     followingCount++;
                 }
-                usernameText.setText(String.valueOf(name));
+                usernameText.setText(name);
+                Picasso.get().load(img).into(DP);
+
                 followersText.setText(String.valueOf(followersCount));
                 followingText.setText(String.valueOf(followingCount));
             }
@@ -170,6 +185,8 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
                         .remove("userID")
                         .remove("name")
                         .apply();
+                prefs.edit()
+                        .clear();
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(getContext(), loginActivity.class));
             }

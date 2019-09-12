@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -44,12 +45,13 @@ public class loginActivity extends AppCompatActivity
     GoogleSignInClient mGoogleSignInClient;
     DatabaseReference mDatabase, currentUser, userRef;
     SharedPreferences prefs;
-
+    boolean newUser;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         //Initialize text fields
 
@@ -68,9 +70,22 @@ public class loginActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
         String userID = prefs.getString("userID","nil");
-        if(userID != "nil"){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
+        newUser = prefs.getBoolean("firstSignIn",false);
+        prefs.edit()
+                .putBoolean("firstSignIn",false)
+                .apply();
+        if(userID != "nil" )
+        {
+            if (newUser== false) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+            else
+            {
+                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
 /*
         FirebaseUser user = mAuth.getCurrentUser();

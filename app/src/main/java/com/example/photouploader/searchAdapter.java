@@ -1,6 +1,7 @@
 package com.example.photouploader;
 
 import android.content.Context;
+import android.hardware.ConsumerIrManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class searchAdapter extends RecyclerView.Adapter<searchAdapter.RecyclerViewHolder> {
     List<userModel> userList;
@@ -40,6 +45,7 @@ public class searchAdapter extends RecyclerView.Adapter<searchAdapter.RecyclerVi
         final userModel user = userList.get(position);
         Log.i("User Count : " , String.valueOf(userList.size()));
         holder.name.setText(user.getName());
+        Picasso.get().load(user.getDpLink()).into(holder.DP);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,12 +71,12 @@ public class searchAdapter extends RecyclerView.Adapter<searchAdapter.RecyclerVi
     public class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
         TextView name;
-
+        CircleImageView DP;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name);
-
+            DP= (CircleImageView) itemView.findViewById(R.id.DP);
         }
     }
 }

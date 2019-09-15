@@ -24,8 +24,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHolder>
 {
@@ -57,8 +60,10 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
         holder.name.setText(user.getName());
         final String id = user.getUserID();
         final String name = user.getName();
+        final String DP = user.getDpLink();
         //lastMessage(user.getUserID(), holder.lastmsg);
 
+        Picasso.get().load(DP).into(holder.dp);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,12 +129,12 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
 
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder
-    {   ImageView dp;
+    {   CircleImageView dp;
         TextView name, lastmsg;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.userText);
-            dp = (ImageView) itemView.findViewById(R.id.dp);
+            dp = (CircleImageView) itemView.findViewById(R.id.dp);
             lastmsg = (TextView) itemView.findViewById(R.id.lastMessage);
 
         }

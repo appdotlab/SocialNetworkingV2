@@ -15,8 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class notificationAdapter extends RecyclerView.Adapter<notificationAdapter.RecyclerViewHolder> {
 
@@ -40,19 +43,25 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     @Override
     public void onBindViewHolder(@NonNull final notificationAdapter.RecyclerViewHolder holder, int position) {
         notificationModel model = notiList.get(position);
-        String userID = model.getUserID();
+        final String userID = model.getUserID();
         final String type = model.getType();
+        final String postID = model.getPostID();
         DatabaseReference userRef;
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String username = String.valueOf(dataSnapshot.child("name").getValue());
-                if(type.compareTo("like") == 0){
-                    holder.notiText.setText(username + " liked your post");
+                String DpLink = String.valueOf(dataSnapshot.child("DpLink").getValue());
+                holder.idText.setText(username);
+                Picasso.get().load(DpLink).into(holder.dp);
+                if(type.compareTo("like") == 0)
+                {
+                    holder.notiText.setText("has liked your post");
+
                 }
                 else{
-                    holder.notiText.setText(username + " started following you");
+                    holder.notiText.setText("has started following you");
                 }
             }
 
@@ -70,10 +79,12 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        TextView notiText;
+        TextView notiText,idText;
+        CircleImageView dp;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            dp = (CircleImageView) itemView.findViewById(R.id.dp);
+            idText =(TextView) itemView.findViewById(R.id.idText);
             notiText = (TextView) itemView.findViewById(R.id.notiText);
         }
     }

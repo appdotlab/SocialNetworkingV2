@@ -46,8 +46,8 @@ public class userListActivity extends AppCompatActivity {
     {
         prefs = getSharedPreferences("Prefs",MODE_PRIVATE);
         final String UID = prefs.getString("userID","N/A");
-        reference = firebaseDatabase.getInstance().getReference("Users").child("following") ;
-        reference1 = firebaseDatabase.getInstance().getReference("Users").child("followers") ;
+        reference = firebaseDatabase.getInstance().getReference("Users").child(UID).child("following") ;
+        reference1 = firebaseDatabase.getInstance().getReference("Users").child(UID).child("followers") ;
 
         userModelList = new ArrayList<userModel>();
 
@@ -57,13 +57,11 @@ public class userListActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                 {
-                    Log.i("WHAT", dataSnapshot.getKey());
 
-                    userModelList = new ArrayList<userModel>();
+
                     for (DataSnapshot snapshot:dataSnapshot.getChildren())
                     {
                         userModel user = new userModel();
-                        Log.i("WHAT", snapshot.getKey());
                         String followingID = snapshot.child("userID").getValue(String.class);
                         user.setUserID(followingID);
                         Log.i("DUDE",followingID);

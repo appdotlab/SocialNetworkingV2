@@ -58,8 +58,10 @@ public class chat extends AppCompatActivity {
                     userModel user = new userModel();
                     String name = userSnapshot.child("name").getValue(String.class);
                     String userID = userSnapshot.getKey();
+                    String DpLink = userSnapshot.child("DpLink").getValue(String.class);
                     user.setName(name);
                     user.setUserID(userID);
+                    user.setDpLink(DpLink);
                     String currentUserID = prefs.getString("userID","N/A");
                     Log.i("User ID : " , currentUserID);
                     Log.i("user : " , userID);

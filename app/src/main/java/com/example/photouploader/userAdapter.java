@@ -1,6 +1,7 @@
 package com.example.photouploader;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -52,15 +56,33 @@ public class userAdapter extends RecyclerView.Adapter<userAdapter.RecyclerViewHo
         final userModel list = userModelList.get(position);
 
 
-        String userID = list.getUserID();
-        String name = list.getName();
-        String DpLink = list.getDpLink();
+        final String userID = list.getUserID();
+        final String name = list.getName();
+        final String DpLink = list.getDpLink();
 
-        Log.i("DET",name);
-        Log.i("DET",DpLink);
+
 
         holder.nameText.setText(name);
         Picasso.get().load(DpLink).into(holder.Dp);
+
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                Fragment fragment = new ProfileFragment();
+//                Bundle data = new Bundle();
+//                data.putString("name",name);
+//
+//                data.putString("userID",userID);
+//                data.putString("DpLink",DpLink);
+//                fragment.setArguments(data);
+//                activity.getSupportFragmentManager()
+//                        .beginTransaction().
+//                        replace(R.id.fragments_container, fragment)
+//                        .addToBackStack(null).commit();
+//            }
+//        });
+
 
     }
 

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,6 +59,7 @@ public class ProfileFragment extends Fragment {
     public void setProfile(){
         name.setText(user.name);
         age.setText(user.age);
+        Picasso.get().load(user.getDpLink()).into(dp);
         unfollowBtn.setVisibility(View.GONE);
         followingText.setVisibility(View.GONE);
         followText.setVisibility(View.VISIBLE);

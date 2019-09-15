@@ -11,12 +11,13 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/dp"
             android:layout_width="65dp"
             android:layout_height="65dp"
+            android:src="@drawable/shark"
 
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+            />
 
         <TextView
             android:id="@+id/userText"

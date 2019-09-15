@@ -64,9 +64,12 @@ public class SearchFragment extends Fragment {
                     String name = userSnapshot.child("name").getValue(String.class);
                     String age = String.valueOf(userSnapshot.child("age").getValue(int.class));
                     String userID = userSnapshot.getKey();
+                    String DpLink = userSnapshot.child("DpLink").getValue(String.class);
+
                     user.setName(name);
                     user.setAge(age);
                     user.setUserID(userID);
+                    user.setDpLink(DpLink);
                     String currentUserID = prefs.getString("userID","N/A");
                     Log.i("User ID : " , currentUserID);
                     Log.i("user : " , userID);

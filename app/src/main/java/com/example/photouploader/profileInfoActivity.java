@@ -157,6 +157,9 @@ public class profileInfoActivity extends AppCompatActivity {
                 String img = String.valueOf(uri);
                 Log.i("Img",img);
                 photoRef.child("DpLink").setValue(img);
+                prefs.edit()
+                        .putString("DpLink",img)
+                        .apply();
 //                Picasso.get().load(img).into(DP);
 
 
@@ -190,7 +193,8 @@ public class profileInfoActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
 
         super.onBackPressed();
     }

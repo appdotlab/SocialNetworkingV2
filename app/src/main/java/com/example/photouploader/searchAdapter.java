@@ -48,6 +48,7 @@ public class searchAdapter extends RecyclerView.Adapter<searchAdapter.RecyclerVi
                 data.putString("name",user.getName());
                 data.putString("age",user.getAge());
                 data.putString("userID",user.getUserID());
+                data.putString("DpLink",user.getDpLink());
                 fragment.setArguments(data);
                 fragmentManager.beginTransaction()
                         .replace(R.id.fragments_container, fragment)

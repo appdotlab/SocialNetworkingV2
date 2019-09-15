@@ -1,9 +1,21 @@
 package com.example.photouploader;
 
-public class userModel {
+public class userModel
+{
     public String name;
     public  String age;
     public  String userID;
+
+    public String getDpLink() {
+        return DpLink;
+    }
+
+    public void setDpLink(String dpLink) {
+        DpLink = dpLink;
+    }
+
+    public  String DpLink;
+
 
     public String getName() {
         return name;

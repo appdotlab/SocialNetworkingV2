@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,8 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
     List<postModel> postModelLists;
     DatabaseReference userRef, postRef;
     RecyclerView postView;
+    LinearLayout followingLayout,followersLayout;
+
 
     @Nullable
     @Override
@@ -58,6 +61,9 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         followingText = (TextView) view.findViewById(R.id.followingText);
         editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
         logoutBtn = (Button) view.findViewById(R.id.logout);
+        followersLayout = (LinearLayout) view.findViewById(R.id.followersLayout);
+        followingLayout = (LinearLayout) view.findViewById(R.id.followingLayout);
+
         postView = (RecyclerView) view.findViewById(R.id.postView);
         DP = (CircleImageView) view.findViewById(R.id.dp) ;
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
@@ -111,7 +117,19 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
 
             }
         });
+        followersLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listClick(false);
+            }
+        });
 
+        followingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listClick(true);
+            }
+        });
         updateUI();
         logout();
         editProfile();
@@ -123,6 +141,23 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
 //        editProfileDialog editProfileDialog = new editProfileDialog();
 //        editProfileDialog.show(getActivity().getSupportFragmentManager(), "editProfile dialog");
 //    }
+    void listClick(boolean bool)
+    {
+        if (bool == true)
+        {
+            Intent i = new Intent(getActivity().getApplicationContext(), userListActivity.class);
+            i.putExtra("bool",true);
+            Log.i("BOOL",String.valueOf(bool));
+            startActivity(i);
+        }
+        else
+        {
+            Intent i = new Intent(getActivity().getApplicationContext(), userListActivity.class);
+            i.putExtra("bool",false);
+            Log.i("BOOL",String.valueOf(bool));
+            startActivity(i);
+        }
+    }
 
     @Override
     public void applyTexts(String name, String bio) {

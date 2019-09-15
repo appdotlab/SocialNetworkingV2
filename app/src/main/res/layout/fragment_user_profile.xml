@@ -111,6 +111,7 @@
                     android:weightSum="90">
 
                     <LinearLayout
+                        android:id="@+id/postLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
@@ -128,12 +129,13 @@
                             android:id="@+id/postsText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2"
+                            android:text="0"
                             android:textSize="30sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/followingLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
@@ -151,12 +153,13 @@
                             android:id="@+id/followingText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25"
+                            android:text="0"
                             android:textSize="30sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/followersLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
@@ -167,14 +170,14 @@
                             android:id="@+id/usernameEdit3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Following"
+                            android:text="Followers"
                             android:textSize="17sp" />
 
                         <TextView
                             android:id="@+id/followersText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"
+                            android:text="0"
                             android:textSize="30sp" />
 
                     </LinearLayout>

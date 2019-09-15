@@ -38,6 +38,7 @@ public class ProfileFragment extends Fragment {
         user.setName(getArguments().getString("name"));
         user.setAge(getArguments().getString("age"));
         user.setUserID(getArguments().getString("userID"));
+        user.setDpLink(getArguments().getString("DpLink"));
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         dp =  (CircleImageView) view.findViewById(R.id.img);
         name = (TextView) view.findViewById(R.id.name);
@@ -93,10 +94,15 @@ public class ProfileFragment extends Fragment {
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 String currentUserID = prefs.getString("userID", "N/A");
                 String currentUserName = prefs.getString("name", "N/A");
+                String CurrUserDPLink = prefs.getString("DpLink","N/A") ;
                 followers = database.getReference().child("Users").child(user.getUserID()).child("followers").child(currentUserID);
-                followers.setValue(currentUserName);
+                followers.child("userID").setValue(currentUserID);
+                followers.child("name").setValue(currentUserName);
+                followers.child("DpLink").setValue(CurrUserDPLink);
                 following = database.getReference().child("Users").child(currentUserID).child("following").child(user.getUserID());
-                following.setValue(user.getName());
+                following.child("userID").setValue(user.getUserID());
+                following.child("name").setValue(user.getName());
+                following.child("DpLink").setValue(user.getDpLink());
                 Toast.makeText(getActivity().getApplicationContext(), "Followed", Toast.LENGTH_SHORT).show();
                 unfollowBtn.setVisibility(View.VISIBLE);
                 followBtn.setVisibility(View.GONE);

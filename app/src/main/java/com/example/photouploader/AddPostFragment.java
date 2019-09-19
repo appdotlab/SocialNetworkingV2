@@ -8,13 +8,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,8 +28,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 //import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -39,22 +40,30 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddPostFragment extends Fragment {
 
+    Bitmap croppedImageBitmap;
+
     Button chooseBtn, uploadBtn;
     ImageView imageView;
-    private Uri filePath, imgPath;
+    CropImageView cropImageView;
+    private Uri filePath, croppedImagePath;
     FirebaseStorage storage;
     StorageReference storageReference, ref2;
     DatabaseReference postRef;
     SharedPreferences prefs;
+    Context context;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_post, container, false);
 
+        context = getContext();
+
         chooseBtn = (Button) view.findViewById(R.id.chooseBtn);
         uploadBtn = (Button) view.findViewById(R.id.uploadBtn);
         imageView = (ImageView) view.findViewById(R.id.imageView);
+        cropImageView = (CropImageView) view.findViewById(R.id.cropImageView);
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         ref2 = storage.getReference();
@@ -63,32 +72,38 @@ public class AddPostFragment extends Fragment {
 
         choose();
         upload();
+        crop();
         return view;
     }
     public void choose(){
+
         chooseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 71);
+*/
+
             }
         });
+
     }
     public void upload(){
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(filePath != null)
+                Toast.makeText(context, "Path : " + croppedImagePath, Toast.LENGTH_SHORT).show();
+                if(croppedImagePath != null)
                 {
                     final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
                     progressDialog.setTitle("Uploading...");
                     progressDialog.show();
                     final String id = prefs.getString("userID", "N/A");
                     final StorageReference ref = storageReference.child("images/"+id+"/"+ UUID.randomUUID().toString());
-                    ref.putFile(filePath)
+                    ref.putFile(croppedImagePath)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -134,13 +149,26 @@ public class AddPostFragment extends Fragment {
             filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+                cropImageView.setImageBitmap(bitmap);
+                croppedImageBitmap = cropImageView.getCroppedImage();
+                croppedImagePath = getImageUri(context, croppedImageBitmap);
             }
             catch (IOException e)
             {
                 e.printStackTrace();
             }
         }
+/*
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                Log.i("Cropsss","OK");
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+ */
     }
 
     private void uploadSuccess(StorageReference ref){
@@ -164,9 +192,18 @@ public class AddPostFragment extends Fragment {
                 // Handle any errors
             }
         });
+    }
 
+    private void crop(){
+        CropImage.activity()
+                .start(getContext(), this);
+    }
 
-
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        //ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        //inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
 }

@@ -8,6 +8,13 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        app:srcCompat="@color/colorPrimary"
+        android:visibility="gone"/>
+
+    <com.theartofdev.edmodo.cropper.CropImageView
+        android:id="@+id/cropImageView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         app:srcCompat="@color/colorPrimary" />
 
     <LinearLayout

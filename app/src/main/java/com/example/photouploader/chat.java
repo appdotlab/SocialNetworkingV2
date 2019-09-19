@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +31,7 @@ public class chat extends AppCompatActivity {
     DatabaseReference userRef;
     List<userModel> userList;
     SharedPreferences prefs;
+    ImageButton back2home;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -35,12 +39,18 @@ public class chat extends AppCompatActivity {
         setContentView(R.layout.chat);
         chatlist = (RecyclerView) findViewById(R.id.chatView);
         chatlist.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
+        back2home = (ImageButton) findViewById(R.id.backButton);
 
         prefs = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        back2home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
     }
 

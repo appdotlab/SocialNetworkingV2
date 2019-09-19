@@ -4,32 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:padding="8dp"
+
     android:orientation="vertical"
     tools:context=".messageActivity">
 
-<Toolbar
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:id="@+id/toolbar"
-    ></Toolbar>
+    <include
+        layout="@layout/user_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_Bar"
+        />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageView"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="50dp">
+        android:layout_below="@+id/user_Bar"
+        android:layout_marginLeft="26dp"
+        android:layout_above="@+id/messageEdit">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-
     <include
+        android:id="@+id/messageEdit"
         layout="@layout/messagearea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_centerVertical="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"/>
+        android:layout_centerVertical="true"
+        android:gravity="bottom" />
 </RelativeLayout>

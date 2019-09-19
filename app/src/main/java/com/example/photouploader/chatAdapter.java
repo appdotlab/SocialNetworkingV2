@@ -61,7 +61,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
         final String id = user.getUserID();
         final String name = user.getName();
         final String DP = user.getDpLink();
-        //lastMessage(user.getUserID(), holder.lastmsg);
+        lastMessage(user.getUserID(), holder.lastmsg);
 
         Picasso.get().load(DP).into(holder.dp);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,54 +73,54 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                 i.putExtra("otherName", user.getName());
                 i.putExtra("otherID", user.getUserID());
-
+                i.putExtra("otherDP",user.getDpLink());
                 context.startActivity(i);
 
             }
         });
     }
-//    public void lastMessage(final String userID, final TextView textView)
-//    {
-//        theLastMessage = "default";
-//        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
-//
-//        reference.addValueEventListener(new ValueEventListener()
-//        {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-//            {
-//
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-//                {
-//                    messageModel messagemodel = snapshot.getValue(messageModel.class);
-//                    if(messagemodel.getRecieverID().equals(currID) && messagemodel.getSenderID().equals(userID) ||  messagemodel.getRecieverID().equals(userID) && messagemodel.getSenderID().equals(currID))
-//                    {
-//                        theLastMessage = messagemodel.getMessage();
-//
-//                    }
-//                }
-//
-//                switch (theLastMessage)
-//                {
-//                    case "default":
-//                        textView.setText("No Message");
-//                        break;
-//
-//                    default:
-//                        textView.setText(theLastMessage);
-//                        break;
-//                }
-//                theLastMessage = "default";
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError)
-//            {
-//
-//            }
-//        });
-//    }
+    public void lastMessage(final String userID, final TextView textView)
+    {
+        theLastMessage = "default";
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    messageModel messagemodel = snapshot.getValue(messageModel.class);
+                    if(messagemodel.getReceiver().equals(currID) && messagemodel.getSender().equals(userID) ||  messagemodel.getReceiver().equals(userID) && messagemodel.getSender().equals(currID))
+                    {
+                        theLastMessage = messagemodel.getMessage();
+
+                    }
+                }
+
+                switch (theLastMessage)
+                {
+                    case "default":
+                        textView.setText("No Message");
+                        break;
+
+                    default:
+                        textView.setText(theLastMessage);
+                        break;
+                }
+                theLastMessage = "default";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         return userList.size();

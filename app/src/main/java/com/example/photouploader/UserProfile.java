@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,6 +41,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class UserProfile extends Fragment implements editProfileDialog.editProfileDialogListener {
+
+    TextView followText, followingButtonText;
+    ImageButton followBtn, unfollowBtn;
 
     TextView usernameText, followersText, followingText,bioText;
     Button editProfileBtn, logoutBtn;
@@ -63,6 +67,18 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         logoutBtn = (Button) view.findViewById(R.id.logout);
         followersLayout = (LinearLayout) view.findViewById(R.id.followersLayout);
         followingLayout = (LinearLayout) view.findViewById(R.id.followingLayout);
+
+        followBtn = (ImageButton) view.findViewById(R.id.followBtn);
+        unfollowBtn = (ImageButton) view.findViewById(R.id.unfollowBtn);
+        followText = (TextView) view.findViewById(R.id.followText);
+        followingButtonText = (TextView) view.findViewById(R.id.followingButtonText);
+
+        followBtn.setVisibility(View.GONE);
+        unfollowBtn.setVisibility(View.GONE);
+        followText.setVisibility(View.GONE);
+        followingButtonText.setVisibility(View.GONE);
+
+
 
         postView = (RecyclerView) view.findViewById(R.id.postView);
         DP = (CircleImageView) view.findViewById(R.id.dp) ;

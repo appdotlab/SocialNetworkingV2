@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,19 +32,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class messageActivity extends AppCompatActivity {
     SharedPreferences prefs;
 
-    TextView username;
-    ImageView sendButton;
+    TextView RecieverName;
+    ImageButton sendButton,backButton;
     EditText messageArea;
+    CircleImageView RecieverDP;
 
     FirebaseDatabase database;
     DatabaseReference reference;
@@ -64,7 +69,9 @@ public class messageActivity extends AppCompatActivity {
         final String currUserName = prefs.getString("name", "N/A");
         final String receiverID = intent.getStringExtra("otherID");
         final String recieverName = intent.getStringExtra("otherName");
-
+        final String dpLink = intent.getStringExtra("otherDP");
+        RecieverName =(TextView) findViewById(R.id.userText);
+        RecieverDP = (CircleImageView) findViewById(R.id.userDP);
         messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext());
         messageView = (RecyclerView) findViewById(R.id.messageView);
         messageView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -79,11 +86,20 @@ public class messageActivity extends AppCompatActivity {
                 .putString("recieverName", recieverName)
                 .apply();
 
-        sendButton = (ImageView) findViewById(R.id.sendButton);
+        sendButton = (ImageButton) findViewById(R.id.sendButton);
         messageArea = (EditText) findViewById(R.id.editMessage);
-        username = (TextView) findViewById(R.id.username);
+        backButton = (ImageButton) findViewById(R.id.backButton);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
+        RecieverName.setText(recieverName);
+        Picasso.get().load(dpLink).into(RecieverDP);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

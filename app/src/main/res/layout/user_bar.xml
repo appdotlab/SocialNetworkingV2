@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="51dp">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="39dp"
+        android:layout_height="39dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:background="#00FFFFFF"
+        app:srcCompat="@drawable/back_fromdm" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/userDP"
+        android:layout_toRightOf="@+id/backButton"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/shark"
+        />
+
+    <TextView
+        android:id="@+id/userText"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="22dp"
+        android:layout_toRightOf="@+id/userDP"
+        android:text="Tiger Machan"
+
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,10 +9,12 @@
     <TextView
         android:id="@+id/chatHeader"
         android:text="Messages "
-        android:textSize="30dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
         android:layout_alignParentLeft="true"
-        android:shadowColor="@color/cardview_dark_background"
-        android:shadowRadius="@android:integer/config_shortAnimTime"
+        android:layout_marginLeft="26dp"
+        android:layout_below="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content">
@@ -25,4 +28,14 @@
      android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        app:srcCompat="@drawable/back_fromdm" />
 </RelativeLayout>

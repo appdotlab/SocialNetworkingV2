@@ -38,9 +38,9 @@
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:layout_below="@+id/usernameText"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginLeft="9dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginStart="161dp"
+                    android:layout_marginLeft="161dp"
+                    android:layout_marginTop="53dp"
                     android:layout_toEndOf="@+id/dp"
                     android:layout_toRightOf="@+id/dp"
                     android:background="@color/fui_bgEmail"
@@ -59,6 +59,81 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="14dp"
                      />
+                <ImageButton
+                    android:id="@+id/followBtn"
+                    android:layout_width="124dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="89dp"
+                    android:layout_toEndOf="@+id/dp"
+                    android:layout_toRightOf="@+id/dp"
+                    android:background="#00FFFFFF"
+                    android:src="@drawable/follow"
+
+                    android:visibility="visible"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/followText"
+                    android:layout_width="124dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="89dp"
+                    android:layout_toEndOf="@+id/dp"
+                    android:layout_toRightOf="@+id/dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="20sp"
+                    android:text="Follow"
+                    android:textAlignment="center"
+
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/followingButtonText"
+                    android:layout_width="124dp"
+                    android:layout_height="31dp"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="89dp"
+                    android:layout_toEndOf="@+id/dp"
+                    android:layout_toRightOf="@+id/dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="top"
+                    android:lineSpacingExtra="20sp"
+                    android:text="Following"
+                    android:textAlignment="center"
+                    android:textColor="#FF8A72"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+
+                <ImageButton
+                    android:id="@+id/unfollowBtn"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="124dp"
+                    android:layout_height="31dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="89dp"
+                    android:layout_toEndOf="@+id/dp"
+
+                    android:layout_toRightOf="@+id/dp"
+                    android:adjustViewBounds="false"
+                    android:background="#00FFFFFF"
+                    android:cropToPadding="false"
+                    android:elevation="10dp"
+                    android:gravity="top"
+                    android:scaleType="fitCenter"
+                    android:scaleX="1.09"
+                    android:scaleY="1.09"
+                    android:src="@drawable/following"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/usernameText"

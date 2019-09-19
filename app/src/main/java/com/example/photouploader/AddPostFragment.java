@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 //import com.squareup.picasso.Picasso;
@@ -95,7 +96,6 @@ public class AddPostFragment extends Fragment {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Path : " + croppedImagePath, Toast.LENGTH_SHORT).show();
                 if(croppedImagePath != null)
                 {
                     final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
@@ -152,23 +152,26 @@ public class AddPostFragment extends Fragment {
                 cropImageView.setImageBitmap(bitmap);
                 croppedImageBitmap = cropImageView.getCroppedImage();
                 croppedImagePath = getImageUri(context, croppedImageBitmap);
+                cropImageView.setImageBitmap(croppedImageBitmap);
+
+
             }
+
             catch (IOException e)
             {
                 e.printStackTrace();
             }
         }
-/*
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                Log.i("Cropsss","OK");
+                croppedImagePath = resultUri;
+                Picasso.get().load(croppedImagePath).into(imageView);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
- */
     }
 
     private void uploadSuccess(StorageReference ref){
@@ -196,6 +199,9 @@ public class AddPostFragment extends Fragment {
 
     private void crop(){
         CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setFixAspectRatio(true)
+                .setAspectRatio(1,1)
                 .start(getContext(), this);
     }
 

@@ -34,8 +34,13 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 //import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.UUID;
+
+import id.zelory.compressor.Compressor;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -98,6 +103,8 @@ public class AddPostFragment extends Fragment {
             public void onClick(View view) {
                 if(croppedImagePath != null)
                 {
+                    compressImage();
+
                     final ProgressDialog progressDialog = new ProgressDialog(view.getContext());
                     progressDialog.setTitle("Uploading...");
                     progressDialog.show();
@@ -138,6 +145,17 @@ public class AddPostFragment extends Fragment {
 //                Log.i("img", img);
             }
         });
+    }
+
+    private void compressImage() {
+        File imageFile = new File(croppedImagePath.getPath());
+        try {
+            File compressedImageFile = new Compressor(context).compressToFile(imageFile);
+            Uri compressedImageURI = Uri.fromFile(compressedImageFile);
+            croppedImagePath = compressedImageURI;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

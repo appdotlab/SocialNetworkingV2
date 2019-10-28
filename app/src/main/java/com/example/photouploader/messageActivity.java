@@ -45,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class messageActivity extends AppCompatActivity {
     SharedPreferences prefs;
 
-    TextView RecieverName;
+    TextView RecieverName,seenText;
     ImageButton sendButton,backButton;
     EditText messageArea;
     CircleImageView RecieverDP;
@@ -70,13 +70,15 @@ public class messageActivity extends AppCompatActivity {
         final String receiverID = intent.getStringExtra("otherID");
         final String recieverName = intent.getStringExtra("otherName");
         final String dpLink = intent.getStringExtra("otherDP");
+        final String lastmessage = intent.getStringExtra("lastmessage");
         RecieverName =(TextView) findViewById(R.id.userText);
         RecieverDP = (CircleImageView) findViewById(R.id.userDP);
-        messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext());
+
+
+        messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext(),lastmessage);
         messageView = (RecyclerView) findViewById(R.id.messageView);
         messageView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        messageView.setHasFixedSize(true);
-
+        messageView.hasNestedScrollingParent();
 
         prefs.edit()
                 .putString("recieverID", receiverID)
@@ -130,7 +132,7 @@ public class messageActivity extends AppCompatActivity {
                 Log.i("receiver", receiverID);
                 Log.i("Sent", "Works?");
 
-                readMesagges(currentUserID,receiverID);
+                readMesagges(currentUserID,receiverID,lastmessage);
             }
 
             @Override
@@ -152,7 +154,7 @@ public class messageActivity extends AppCompatActivity {
         reference.child("Chats").push().setValue(hashMap);
     }
 
-    private void readMesagges(final String myid, final String userid) {
+    private void readMesagges(final String myid, final String userid, final String lastmessage) {
         messageModelList = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -163,18 +165,14 @@ public class messageActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     messageModel messagemodel = snapshot.getValue(messageModel.class);
-                    Log.i("MSGsss", "Receiver ID : " + messagemodel.getReceiver());
-                    Log.i("MSGsss", "User ID : " + userid);
-                    Log.i("MSGsss", "Sender ID : " + messagemodel.getSender());
-                    Log.i("MSGsss", "My ID : " + myid);
+
                     if (((messagemodel.getSender().compareTo(myid) == 0) && (messagemodel.getReceiver().compareTo(userid) == 0)) || ((messagemodel.getSender().compareTo(userid) == 0) && (messagemodel.getReceiver().compareTo(myid) == 0)))
                     {
                         messageModelList.add(messagemodel);
-                        Log.i("MSGsss", "setToAdapter");
 
                     }
 
-                    messageAdapter adapter = new messageAdapter(messageModelList, messageActivity.this);
+                    messageAdapter adapter = new messageAdapter(messageModelList, messageActivity.this,lastmessage);
                     messageView.setAdapter(adapter);
                 }
             }

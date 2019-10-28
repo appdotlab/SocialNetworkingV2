@@ -22,15 +22,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- Ellipse -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                </LinearLayout>
+
+
                 <Button
                     android:id="@+id/editProfileBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="55dp"
+                    android:layout_height="10dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="6dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/fui_transparent"
-                    android:text="Edit Profile"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/ellipse"
                     android:textSize="10dp" />
 
                 <Button

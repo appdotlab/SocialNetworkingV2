@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:elevation="10dp"
+    android:layout_marginTop="13dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="19dp"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true">
 
     <RelativeLayout
         android:id="@+id/rl2"
@@ -24,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
             android:text="Author Name"
-            android:textColor="#000000"
+            android:textColor="#F8707B"
             android:textSize="18sp" />
 
         <TextView
@@ -34,14 +40,6 @@
             android:text="Description"
             android:textSize="18sp"
             android:layout_below="@+id/postAuthorNameText"/>
-
-        <TextView
-            android:id="@+id/viewCommentsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/postDescText"
-            android:text="View all Comments"
-            android:textSize="15sp" />
 
     </RelativeLayout>
 
@@ -58,7 +56,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="0dp"
 
             android:background="#00FFFFFF"
@@ -78,12 +76,25 @@
             android:src="@drawable/liked"
             tools:visibility="visible" />
 
+        <ImageButton
+            android:id="@+id/commentsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/postImg"
+            android:layout_toRightOf="@+id/likesText"
+            android:background="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/commentbutton" />
+
+
         <ImageView
             android:id="@+id/postImg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
+
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
         <TextView

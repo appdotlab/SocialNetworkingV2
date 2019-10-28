@@ -36,11 +36,12 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     List<messageModel> modelList;
     Context context;
     SharedPreferences prefs;
-    public String currID, receiverID;
+    public String currID, receiverID,lastmessage;
 
 
-    public messageAdapter(List<messageModel> modelList, Context context) {
+    public messageAdapter(List<messageModel> modelList, Context context, String lastmessage) {
         this.modelList = modelList;
+        this.lastmessage= lastmessage;
         this.context = context;
     }
 
@@ -67,6 +68,21 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     {
        messageModel model = modelList.get(i);
        holder.show_message.setText(model.getMessage());
+//       if (MSG_TYPE_RIGHT == 1)
+//       {
+////           holder.seenText.setVisibility(View.GONE);
+//           if (!model.isIsseen())
+//           {
+//               Log.i("HELOO who dis", "message is seen");
+//               if (model.getMessage().compareTo(lastmessage)!=0)
+//               {
+//                   holder.seenText.setVisibility(View.VISIBLE);
+//               }
+//           }
+//       }
+
+
+
 
     }
 
@@ -77,11 +93,16 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
 
     public class recyclerViewHolder extends RecyclerView.ViewHolder
     {
-        public TextView show_message;
+        public TextView show_message,seenText;
+
         public recyclerViewHolder(@NonNull View itemView)
         {
             super(itemView);
             show_message = (TextView) itemView.findViewById(R.id.show_message);
+           // seenText =(TextView) itemView.findViewById(R.id.seen_text1);
+
+
+
         }
     }
     @Override

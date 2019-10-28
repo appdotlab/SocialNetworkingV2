@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,8 +40,10 @@ public class HomeFragment extends Fragment  {
     DatabaseReference postRef;
     List<postModel> postList;
     SharedPreferences prefs;
-    Button messageButton;
+    ImageButton messageButton;
     String currentPostID = null;
+    TextView AppName;
+    ImageView bar;
 
     public HomeFragment(String postID) {
         currentPostID = postID;
@@ -55,7 +60,9 @@ public class HomeFragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        messageButton = (Button) view.findViewById(R.id.button);
+        messageButton = (ImageButton) view.findViewById(R.id.messages);
+        bar= (ImageView) view.findViewById(R.id.bar);
+        AppName = (TextView) view.findViewById(R.id.AppName);
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +75,8 @@ public class HomeFragment extends Fragment  {
 
         if(currentPostID != null){
             messageButton.setVisibility(View.GONE);
+            AppName.setVisibility(view.GONE);
+            bar.setVisibility(view.GONE);
         }
 
         prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);

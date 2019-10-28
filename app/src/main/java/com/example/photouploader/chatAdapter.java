@@ -35,6 +35,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
     List<userModel> userList;
     Context context;
     String theLastMessage;
+    boolean isSeen = false;
     SharedPreferences prefs;
     public String currID;
     public chatAdapter(List<userModel> userList, Context context) {
@@ -74,6 +75,7 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
                 i.putExtra("otherName", user.getName());
                 i.putExtra("otherID", user.getUserID());
                 i.putExtra("otherDP",user.getDpLink());
+                i.putExtra("lastmessage",theLastMessage);
                 context.startActivity(i);
 
             }
@@ -97,6 +99,8 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
                     if(messagemodel.getReceiver().equals(currID) && messagemodel.getSender().equals(userID) ||  messagemodel.getReceiver().equals(userID) && messagemodel.getSender().equals(currID))
                     {
                         theLastMessage = messagemodel.getMessage();
+                        if (messagemodel.isIsseen())
+                            isSeen=true;
 
                     }
                 }
@@ -109,6 +113,10 @@ public class chatAdapter extends RecyclerView.Adapter<chatAdapter.RecyclerViewHo
 
                     default:
                         textView.setText(theLastMessage);
+                        if (!isSeen)
+                        {
+                            textView.setAllCaps(true);
+                        }
                         break;
                 }
                 theLastMessage = "default";

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,9 +97,10 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
             holder.postLikeBtn.setVisibility(View.GONE);
             holder.postUnlikeBtn.setVisibility(View.GONE);
             holder.postLikesText.setVisibility(View.GONE);
-            holder.viewCommentsText.setVisibility(View.GONE);
+            holder.commentsButton.setVisibility(View.GONE);
             holder.postDescView.setVisibility(View.GONE);
             holder.postAuthorNameText.setVisibility(View.GONE);
+            holder.rl2.setVisibility(View.GONE);
             postIntent(myList.getPostID(), holder);
         }
         else{
@@ -198,7 +200,7 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
                 }
             });
 
-            holder.viewCommentsText.setOnClickListener(new View.OnClickListener() {
+            holder.commentsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Fragment fragment = new CommentsFragment();
@@ -241,16 +243,19 @@ public class postsAdapter extends RecyclerView.Adapter<postsAdapter.RecyclerView
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder{
 
-        TextView postDescView, postLikesText, postAuthorNameText, viewCommentsText;
+        TextView postDescView, postLikesText, postAuthorNameText;
         ImageView postImgView;
-        ImageButton postLikeBtn, postUnlikeBtn;
+        RelativeLayout rl,rl2;
+        ImageButton postLikeBtn, postUnlikeBtn, commentsButton;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            rl = (RelativeLayout) itemView.findViewById(R.id.rl);
+            rl2 = (RelativeLayout) itemView.findViewById(R.id.rl2);
             postDescView = (TextView) itemView.findViewById(R.id.postDescText);
             postAuthorNameText = (TextView) itemView.findViewById(R.id.postAuthorNameText);
-            viewCommentsText = (TextView) itemView.findViewById(R.id.viewCommentsText);
+            commentsButton = (ImageButton) itemView.findViewById(R.id.commentsButton);
             postImgView = (ImageView) itemView.findViewById(R.id.postImg);
             postLikeBtn = (ImageButton) itemView.findViewById(R.id.likeBtn);
             postUnlikeBtn = (ImageButton) itemView.findViewById(R.id.unlikeBtn);

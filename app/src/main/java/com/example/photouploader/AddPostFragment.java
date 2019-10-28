@@ -219,6 +219,7 @@ public class AddPostFragment extends Fragment {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setFixAspectRatio(true)
+                .setMaxCropResultSize(1080,1080)
                 .setAspectRatio(1,1)
                 .start(getContext(), this);
     }

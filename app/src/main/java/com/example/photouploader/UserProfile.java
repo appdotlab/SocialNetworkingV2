@@ -80,6 +80,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
 
 
 
+
         postView = (RecyclerView) view.findViewById(R.id.postView);
         DP = (CircleImageView) view.findViewById(R.id.dp) ;
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);

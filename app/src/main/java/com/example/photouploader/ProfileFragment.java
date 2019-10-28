@@ -73,6 +73,9 @@ public class ProfileFragment extends Fragment {
         followersLayout = (LinearLayout) view.findViewById(R.id.followersLayout);
         followingLayout = (LinearLayout) view.findViewById(R.id.followingLayout);
 
+        editProfileBtn.setVisibility(View.GONE);
+        logoutBtn.setVisibility(View.GONE);
+
         postView = (RecyclerView) view.findViewById(R.id.postView);
         prefs = view.getContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         String img = prefs.getString("img","N/A");

@@ -158,6 +158,10 @@ public class AddPostFragment extends Fragment {
                             });
 
                 }
+                else
+                {
+                    Toast.makeText(getActivity().getApplicationContext(), "Please select an Image to Upload", Toast.LENGTH_LONG).show();
+                }
 
 
 //                final String id = prefs.getString("userID", "N/A");

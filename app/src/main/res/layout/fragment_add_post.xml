@@ -8,6 +8,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="652dp"
+        android:clickable="false"
         android:visibility="gone"
         app:srcCompat="@color/colorPrimary" />
 
@@ -19,16 +20,18 @@
         <include layout="@layout/snippet_top_gallerytoolbar"></include>
 
     </LinearLayout>
+
     <ImageButton
+        android:id="@+id/choose_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/choose_button"
         android:layout_below="@id/linear1"
-        android:backgroundTint="@color/fui_transparent"
         android:layout_centerInParent="true"
-        android:src="@drawable/bear_avatar"
 
-        />
+        android:backgroundTint="@color/fui_transparent"
+        android:clickable="true"
+        android:filterTouchesWhenObscured="false"
+        android:src="@drawable/bear_avatar" />
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"

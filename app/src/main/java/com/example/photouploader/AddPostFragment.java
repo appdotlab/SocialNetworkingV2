@@ -157,8 +157,10 @@ public class AddPostFragment extends Fragment {
                                             .getTotalByteCount());
                                     progressDialog.setMessage("Uploaded "+(int)progress+"%");
                                     imageView.setVisibility(View.GONE);
+                                    imageView.setImageDrawable(null);
                                     text.setVisibility(View.VISIBLE);
                                     chooseButton.setVisibility(View.VISIBLE);
+                                    croppedImagePath=null;
 
                                 }
                             });

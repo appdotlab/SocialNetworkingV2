@@ -71,21 +71,20 @@ public class loginActivity extends AppCompatActivity
         prefs = getSharedPreferences("Prefs", MODE_PRIVATE);
         String userID = prefs.getString("userID","nil");
         newUser = prefs.getBoolean("firstSignIn",false);
-        prefs.edit()
-                .putBoolean("firstSignIn",false)
-                .apply();
+
         if(userID != "nil" )
         {
             if (newUser== false) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
-//            else
-//            {
-//                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
-//                startActivity(i);
-//                finish();
-//            }
+            else
+            {
+                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+                i.putExtra("bool",true);
+                startActivity(i);
+                finish();
+            }
         }
 /*
         FirebaseUser user = mAuth.getCurrentUser();
@@ -213,18 +212,18 @@ public class loginActivity extends AppCompatActivity
             Log.i("YO", toString().valueOf(user.getMetadata().getCreationTimestamp()));
             Log.i("YO", toString().valueOf(user.getMetadata().getLastSignInTimestamp()));
 
-            if (user.getMetadata().getCreationTimestamp()==user.getMetadata().getLastSignInTimestamp()|| user.getMetadata().getLastSignInTimestamp()==0)
-            {
-                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
-                startActivity(i);
-                finish();
-            }
-            else
-            {
+//            if (user.getMetadata().getCreationTimestamp()==user.getMetadata().getLastSignInTimestamp()|| user.getMetadata().getLastSignInTimestamp()==0)
+//            {
+//                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+//                startActivity(i);
+//                finish();
+//            }
+//            else
+//            {
                 Intent i = new Intent(loginActivity.this,MainActivity.class);
                 startActivity(i);
                 finish();
-            }
+//            }
         }
     }
 
@@ -296,24 +295,24 @@ public class loginActivity extends AppCompatActivity
                                 Log.i("YO", toString().valueOf(firebaseUser.getMetadata().getCreationTimestamp()));
                                 Log.i("YO", toString().valueOf(firebaseUser.getMetadata().getLastSignInTimestamp()));
 
-                                if (firebaseUser.getMetadata().getCreationTimestamp()==firebaseUser.getMetadata().getLastSignInTimestamp()|| firebaseUser.getMetadata().getLastSignInTimestamp()==0)
-                                {
-                                    Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
-                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    i.putExtra("email", txt_email);
-
-                                    startActivity(i);
-                                    finish();
-                                }
-                                else
-                                {
+//                                if (firebaseUser.getMetadata().getCreationTimestamp()==firebaseUser.getMetadata().getLastSignInTimestamp()|| firebaseUser.getMetadata().getLastSignInTimestamp()==0)
+//                                {
+//                                    Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+//                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    i.putExtra("email", txt_email);
+//
+//                                    startActivity(i);
+//                                    finish();
+//                                }
+//                                else
+//                                {
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.putExtra("email", txt_email);
 
                                     startActivity(intent);
                                     finish();
-                                }
+//                                }
                             }
                             else
                             {

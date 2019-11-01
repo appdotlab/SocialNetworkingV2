@@ -47,7 +47,7 @@ public class profileInfoActivity extends AppCompatActivity {
     StorageReference storageReference, ref2;
     DatabaseReference photoRef;
     SharedPreferences prefs;
-
+    Boolean bool;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +69,10 @@ public class profileInfoActivity extends AppCompatActivity {
 
         String img = prefs.getString("img","N/A");
         Picasso.get().load(img).into(DP);
-
+        bool=prefs.getBoolean("firstSignIn",false);
+        prefs.edit()
+                .putBoolean("firstSignIn",false)
+                .apply();
         final String id = prefs.getString("userID", "N/A");
         setPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +172,11 @@ public class profileInfoActivity extends AppCompatActivity {
                 prefs.edit()
                         .putString("DpLink",img)
                         .apply();
+                if (bool == true)
+                {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
 //                Picasso.get().load(img).into(DP);
 
 

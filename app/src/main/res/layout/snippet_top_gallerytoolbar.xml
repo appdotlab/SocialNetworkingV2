@@ -16,29 +16,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/ivCloseShare"
+                <ImageButton
+                    android:id="@+id/cancel_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="20dp"
                     android:layout_marginRight="20dp"
+                    android:background="#00FFFFFF"
                     app:srcCompat="@drawable/ic_close" />
 
-                <Spinner
-                    android:id="@+id/directorySpinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/ivCloseShare"
-                    android:layout_centerVertical="true"
-                    android:gravity="center_vertical"/>
-
-                <ImageView
+                <ImageButton
+                    android:id="@+id/upload_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    app:srcCompat="@drawable/ic_done"/>
+                    android:background="#00FFFFFF"
+                    app:srcCompat="@drawable/ic_done" />
 
             </RelativeLayout>
 

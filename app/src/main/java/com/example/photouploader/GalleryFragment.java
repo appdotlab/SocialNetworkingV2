@@ -39,7 +39,6 @@ public class GalleryFragment extends Fragment {
 
         galleryImage = (ImageView) view.findViewById(R.id.galleryImageView);
         gridView = (GridView) view.findViewById(R.id.gridView);
-        spinner = (Spinner) view.findViewById(R.id.directorySpinner);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         directories = new ArrayList<>();

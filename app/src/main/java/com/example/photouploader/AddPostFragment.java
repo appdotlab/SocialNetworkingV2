@@ -13,7 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,7 +50,7 @@ public class AddPostFragment extends Fragment {
 
     Bitmap croppedImageBitmap;
 
-    Button chooseBtn, uploadBtn;
+    ImageButton cancelButton, uploadBtn,chooseButton;
     ImageView imageView;
     CropImageView cropImageView;
     private Uri filePath, croppedImagePath;
@@ -57,6 +59,7 @@ public class AddPostFragment extends Fragment {
     DatabaseReference postRef;
     SharedPreferences prefs;
     Context context;
+    TextView text;
 
     @Nullable
     @Override
@@ -65,10 +68,14 @@ public class AddPostFragment extends Fragment {
 
         context = getContext();
 
-        chooseBtn = (Button) view.findViewById(R.id.chooseBtn);
-        uploadBtn = (Button) view.findViewById(R.id.uploadBtn);
+        cancelButton = (ImageButton) view.findViewById(R.id.cancel_button);
+        uploadBtn = (ImageButton) view.findViewById(R.id.upload_button);
+        chooseButton = (ImageButton) view.findViewById(R.id.choose_button);
         imageView = (ImageView) view.findViewById(R.id.imageView);
         cropImageView = (CropImageView) view.findViewById(R.id.cropImageView);
+        text = (TextView) view.findViewById(R.id.textView2);
+
+        imageView.setVisibility(view.GONE);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -79,19 +86,33 @@ public class AddPostFragment extends Fragment {
         choose();
         upload();
         crop();
+        cancel();
         return view;
+    }
+    public  void  cancel()
+    {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setVisibility(View.GONE);
+                text.setVisibility(View.VISIBLE);
+                chooseButton.setVisibility(View.VISIBLE);
+
+
+            }
+        });
     }
     public void choose(){
 
-        chooseBtn.setOnClickListener(new View.OnClickListener() {
+        chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 71);
-*/
+//
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 71);
+
 
             }
         });
@@ -185,6 +206,9 @@ public class AddPostFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 croppedImagePath = resultUri;
+                text.setVisibility(View.GONE);
+                chooseButton.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
                 Picasso.get().load(croppedImagePath).into(imageView);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();

@@ -1,67 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.ayout.widget.ConstraintLayouandroid.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".profileInfoActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:paddingLeft="5dp"
+        app:contentInsetStart="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:elevation="10dp"
+        android:outlineSpotShadowColor="@android:color/black"
+        android:outlineProvider="bounds"
+        android:layout_marginBottom="10dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#00494949"
+            android:clickable="true"
+            android:src="@drawable/back_fromdm" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/setDP"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_centerHorizontal="true"
         android:src="@drawable/userdefaultclicked"
+        android:layout_gravity="center_horizontal"
         />
+
+    <Button
+        android:id="@+id/setPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/fui_transparent"
+        android:text="Change Photo"
+        android:layout_gravity="center_horizontal"/>
+
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/setDName"
-        android:layout_below="@+id/setPhotoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
+
+
+        android:hint="Enter Display Name :"
         android:inputType="textPersonName"
         android:padding="10dp"
-        android:hint="Enter Display Name :"
-        app1:met_floatingLabel="highlight"
-        app1:met_floatingLabelAlwaysShown="false"
-        app1:met_floatingLabelText="Display Name: "
-
-
-        />
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelAlwaysShown="false"
+        app:met_floatingLabelText="Display Name: " />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/setBio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/setDName"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
+        android:hint="Enter your Bio"
         android:inputType="textPersonName"
         android:padding="10dp"
-        android:hint="Enter your Bio"
-        app1:met_floatingLabelText="Bio: "
-        app1:met_floatingLabel="highlight"
-        app1:met_floatingLabelAlwaysShown="false"
-        />
+        app:met_floatingLabel="highlight"
+        app:met_floatingLabelAlwaysShown="false"
+        app:met_floatingLabelText="Bio: " />
+
     <Button
         android:id="@+id/setData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/fui_transparent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/setBio"
         android:text="Submit"
+        android:layout_gravity="center_horizontal"
         />
 
-    <Button
-        android:id="@+id/setPhotoButton"
-        android:layout_below="@+id/setDP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Photo"
-        android:background="@color/fui_transparent"
-        android:layout_centerHorizontal="true"
-        />
-</RelativeLayout>
+</LinearLayout>

@@ -34,7 +34,7 @@
 
 
                 <Button
-                    android:id="@+id/editProfileBtn"
+                    android:id="@+id/settingsButton"
                     android:layout_width="55dp"
                     android:layout_height="10dp"
                     android:layout_alignParentRight="true"
@@ -43,19 +43,6 @@
                     android:background="@drawable/ellipse"
                     android:textSize="10dp" />
 
-                <Button
-                    android:id="@+id/logout"
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@+id/usernameText"
-                    android:layout_marginStart="161dp"
-                    android:layout_marginLeft="161dp"
-                    android:layout_marginTop="53dp"
-                    android:layout_toEndOf="@+id/dp"
-                    android:layout_toRightOf="@+id/dp"
-                    android:background="@color/fui_bgEmail"
-                    android:text="Logout"
-                    android:textColor="@android:color/white" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/dp"

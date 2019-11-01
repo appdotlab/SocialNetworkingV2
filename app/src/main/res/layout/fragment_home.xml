@@ -2,42 +2,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/background_light">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_marginBottom="10dp"
+        android:background="#FFFFFF"
+        android:elevation="10dp"
+        android:minHeight="0dp"
+        android:outlineProvider="bounds"
+        android:outlineSpotShadowColor="@android:color/black"
+        android:padding="5dp"
+        android:paddingLeft="5dp"
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/AppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Social Media App"
+                android:textColor="#F8707B"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/messages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="#00DADADA"
+                android:clickable="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/send_button" />
+
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_below="@+id/bar"
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ImageButton
-        android:id="@+id/messages"
-        android:layout_width="25dp"
-        android:layout_height="21.43dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="17dp"
-        android:layout_marginBottom="14.57dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/send_button"
-        android:scaleType="fitCenter" />
-
-    <ImageView
-        android:id="@+id/bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/line"
-        android:scaleType="fitXY"
-        android:src="@drawable/line"
-        android:layout_below="@+id/messages"/>
-
-    <TextView
-        android:id="@+id/AppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#F8707B"
-        android:textStyle="bold"
-        android:text="Social Media App"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"/>
 </RelativeLayout>

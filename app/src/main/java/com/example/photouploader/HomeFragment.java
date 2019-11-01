@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment  {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         messageButton = (ImageButton) view.findViewById(R.id.messages);
-        bar= (ImageView) view.findViewById(R.id.bar);
+//        bar= (ImageView) view.findViewById(R.id.bar);
         AppName = (TextView) view.findViewById(R.id.AppName);
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment  {
         if(currentPostID != null){
             messageButton.setVisibility(View.GONE);
             AppName.setVisibility(view.GONE);
-            bar.setVisibility(view.GONE);
+//            bar.setVisibility(view.GONE);
         }
 
         prefs = getActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE);

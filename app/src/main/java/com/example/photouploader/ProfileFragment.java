@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     TextView name, followText, followingButtonText;
-    Button editProfileBtn, logoutBtn;
+    Button settingsButton, logoutBtn;
     TextView usernameText, followersText, followingText,bioText;
 
     CircleImageView dp;
@@ -68,12 +68,11 @@ public class ProfileFragment extends Fragment {
 
         followersText = (TextView) view.findViewById(R.id.followersText);
         followingText = (TextView) view.findViewById(R.id.followingText);
-        editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
-        logoutBtn = (Button) view.findViewById(R.id.logout);
+        settingsButton = (Button) view.findViewById(R.id.settingsButton);
         followersLayout = (LinearLayout) view.findViewById(R.id.followersLayout);
         followingLayout = (LinearLayout) view.findViewById(R.id.followingLayout);
 
-        editProfileBtn.setVisibility(View.GONE);
+        settingsButton.setVisibility(View.GONE);
         logoutBtn.setVisibility(View.GONE);
 
         postView = (RecyclerView) view.findViewById(R.id.postView);

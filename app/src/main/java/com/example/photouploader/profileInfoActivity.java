@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class profileInfoActivity extends AppCompatActivity {
     String Dname,Bio;
-
+    ImageButton backButton;
     CircleImageView DP;
     Button setData, setPhotoButton;
     MaterialEditText setDName,setBio;
@@ -55,6 +56,8 @@ public class profileInfoActivity extends AppCompatActivity {
         DP = (CircleImageView) findViewById(R.id.setDP);
         setPhotoButton = (Button) findViewById(R.id.setPhotoButton);
         setData = (Button) findViewById(R.id.setData);
+        backButton = (ImageButton) findViewById(R.id.backButton);
+
 
         setDName = (MaterialEditText) findViewById(R.id.setDName);
         setBio = (MaterialEditText) findViewById(R.id.setBio);
@@ -75,6 +78,12 @@ public class profileInfoActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 71);
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
         upload();
@@ -195,7 +204,6 @@ public class profileInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-
         super.onBackPressed();
     }
 }

@@ -46,7 +46,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
     ImageButton followBtn, unfollowBtn;
 
     TextView usernameText, followersText, followingText,bioText;
-    Button editProfileBtn, logoutBtn;
+    Button settingsButton;
     CircleImageView DP;
     SharedPreferences prefs;
     List<postModel> postModelLists;
@@ -63,8 +63,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         usernameText = (TextView) view.findViewById(R.id.usernameText);
         followersText = (TextView) view.findViewById(R.id.followersText);
         followingText = (TextView) view.findViewById(R.id.followingText);
-        editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
-        logoutBtn = (Button) view.findViewById(R.id.logout);
+        settingsButton = (Button) view.findViewById(R.id.settingsButton);
         followersLayout = (LinearLayout) view.findViewById(R.id.followersLayout);
         followingLayout = (LinearLayout) view.findViewById(R.id.followingLayout);
 
@@ -148,7 +147,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
             }
         });
         updateUI();
-        logout();
+//        logout();
         editProfile();
         return view;
     }
@@ -183,11 +182,11 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
     }
     public void editProfile()
     {
-        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(getActivity().getApplicationContext(), profileInfoActivity.class);
+                Intent i = new Intent(getActivity().getApplicationContext(), settingsActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
 
@@ -229,20 +228,20 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         });
     }
 
-    public void logout(){
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                prefs.edit()
-                        .remove("userID")
-                        .remove("name")
-                        .apply();
-                prefs.edit()
-                        .clear();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(), loginActivity.class));
-            }
-        });
-    }
+//    public void logout(){
+//        logoutBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                prefs.edit()
+//                        .remove("userID")
+//                        .remove("name")
+//                        .apply();
+//                prefs.edit()
+//                        .clear();
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(getContext(), loginActivity.class));
+//            }
+//        });
+//    }
 
 }

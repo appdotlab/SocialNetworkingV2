@@ -85,7 +85,7 @@ public class AddPostFragment extends Fragment {
 
         choose();
         upload();
-        crop();
+//        crop();
         cancel();
         return view;
     }
@@ -107,6 +107,8 @@ public class AddPostFragment extends Fragment {
         chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                crop();
 //
 //                Intent intent = new Intent();
 //                intent.setType("image/*");
@@ -154,6 +156,10 @@ public class AddPostFragment extends Fragment {
                                     double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
                                             .getTotalByteCount());
                                     progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                                    imageView.setVisibility(View.GONE);
+                                    text.setVisibility(View.VISIBLE);
+                                    chooseButton.setVisibility(View.VISIBLE);
+
                                 }
                             });
 

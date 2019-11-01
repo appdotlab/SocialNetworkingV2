@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,16 +11,15 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:background="#FFFFFF"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:paddingLeft="5dp"
-        app:contentInsetStart="0dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:elevation="10dp"
-        android:outlineSpotShadowColor="@android:color/black"
+        android:minHeight="?attr/actionBarSize"
         android:outlineProvider="bounds"
-        android:layout_marginBottom="10dp">
+        android:outlineSpotShadowColor="@android:color/black"
+        android:paddingLeft="5dp"
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetStart="0dp">
 
         <ImageButton
             android:id="@+id/backButton"
@@ -37,17 +35,16 @@
         android:id="@+id/setDP"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:src="@drawable/userdefaultclicked"
         android:layout_gravity="center_horizontal"
-        />
+        android:src="@drawable/userdefaultclicked" />
 
     <Button
         android:id="@+id/setPhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:background="@color/fui_transparent"
-        android:text="Change Photo"
-        android:layout_gravity="center_horizontal"/>
+        android:text="Change Photo" />
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/setDName"
@@ -91,9 +88,8 @@
         android:id="@+id/setData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/fui_transparent"
-        android:text="Submit"
         android:layout_gravity="center_horizontal"
-        />
+        android:background="@color/fui_transparent"
+        android:text="Submit" />
 
 </LinearLayout>

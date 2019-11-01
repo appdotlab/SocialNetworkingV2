@@ -80,12 +80,12 @@ public class loginActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
-            else
-            {
-                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
-                startActivity(i);
-                finish();
-            }
+//            else
+//            {
+//                Intent i = new Intent(loginActivity.this,profileInfoActivity.class);
+//                startActivity(i);
+//                finish();
+//            }
         }
 /*
         FirebaseUser user = mAuth.getCurrentUser();

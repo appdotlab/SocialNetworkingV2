@@ -2,14 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lmfao"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".userListActivity"
-    android:id="@+id/lmfao">
-    <androidx.recyclerview.widget.RecyclerView
+    android:orientation="vertical"
+    tools:context=".userListActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:paddingLeft="5dp"
+        app:contentInsetStart="0dp"
+        android:paddingBottom="5dp"
+        android:elevation="10dp"
+        android:outlineSpotShadowColor="@android:color/black"
+        android:outlineProvider="bounds">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#00494949"
+            android:clickable="true"
+            android:src="@drawable/back_fromdm"
+            />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/users"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

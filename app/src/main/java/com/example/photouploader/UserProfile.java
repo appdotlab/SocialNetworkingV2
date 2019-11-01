@@ -40,7 +40,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class UserProfile extends Fragment implements editProfileDialog.editProfileDialogListener {
+public class UserProfile extends Fragment {
 
     TextView followText, followingButtonText;
     ImageButton followBtn, unfollowBtn;
@@ -153,10 +153,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
     }
 
 
-//    public void openDialog() {
-//        editProfileDialog editProfileDialog = new editProfileDialog();
-//        editProfileDialog.show(getActivity().getSupportFragmentManager(), "editProfile dialog");
-//    }
+
     void listClick(boolean bool)
     {
         if (bool == true)
@@ -175,11 +172,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
         }
     }
 
-    @Override
-    public void applyTexts(String name, String bio) {
-        usernameText.setText(name);
-        bioText.setText(bio);
-    }
+
     public void editProfile()
     {
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -217,6 +210,7 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
                 usernameText.setText(name);
                 Picasso.get().load(img).into(DP);
 
+
                 followersText.setText(String.valueOf(followersCount));
                 followingText.setText(String.valueOf(followingCount));
             }
@@ -227,21 +221,5 @@ public class UserProfile extends Fragment implements editProfileDialog.editProfi
             }
         });
     }
-
-//    public void logout(){
-//        logoutBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                prefs.edit()
-//                        .remove("userID")
-//                        .remove("name")
-//                        .apply();
-//                prefs.edit()
-//                        .clear();
-//                FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getContext(), loginActivity.class));
-//            }
-//        });
-//    }
 
 }

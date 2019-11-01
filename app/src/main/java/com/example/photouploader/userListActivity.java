@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +30,10 @@ public class userListActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference reference,reference1;
     List<userModel> userModelList;
+    ImageButton backButton;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -34,13 +41,19 @@ public class userListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
         Intent intent = getIntent();
         lol = intent.getBooleanExtra("bool",false);
-
+        backButton = (ImageButton) findViewById(R.id.backButton);
         users =(RecyclerView) findViewById(R.id.users);
         users.setLayoutManager(new LinearLayoutManager(this));
 
 
         displayUsers();
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
     void displayUsers()
     {
@@ -112,5 +125,10 @@ public class userListActivity extends AppCompatActivity {
             });
         }
 
+    }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
     }
 }

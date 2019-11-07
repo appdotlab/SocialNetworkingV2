@@ -4,8 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8707B"
     android:orientation="vertical"
     tools:context="com.example.photouploader.loginActivity">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="49dp"
+        android:fontFamily="@font/caveat"
+        android:padding="1dp"
+        android:text="Socialix"
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="104dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="Login"
+
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/rectangle" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,52 +45,54 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editEmail"
-            android:layout_width="match_parent"
+            android:layout_width="242dp"
             android:layout_height="wrap_content"
 
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="175dp"
+            android:layout_centerHorizontal="true"
 
-            android:layout_marginRight="50dp"
+            android:layout_marginTop="20dp"
             android:contentDescription="emailField"
             android:ems="10"
+            android:gravity="center_horizontal"
             android:hint="Enter your Email :"
             android:inputType="textEmailAddress"
             android:textAllCaps="false"
             android:textColor="#000000"
-            android:textSize="20dp"
+            android:textSize="15sp"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Email:" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editPassword"
-            android:layout_width="match_parent"
+            android:layout_width="242dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editEmail"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="50dp"
 
+            android:layout_marginRight="50dp"
             android:autofillHints="gmail.com"
             android:ems="10"
+            android:gravity="center_horizontal"
             android:hint="Enter the Password"
             android:inputType="textPassword"
-            android:textSize="20dp"
+            android:textSize="15sp"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Password:"
             app:met_minCharacters="6" />
 
+
         <Button
             android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="119dp"
+            android:layout_height="41dp"
             android:layout_below="@+id/editPassword"
-            android:layout_marginLeft="50dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="50dp"
-            android:text="Login"
-            android:textSize="17dp"
-            android:backgroundTintMode="screen"/>
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/reg"
+            android:text="Login" />
 
         <TextView
             android:id="@+id/registerText"
@@ -68,42 +101,35 @@
             android:layout_alignWithParentIfMissing="true"
             android:layout_below="@+id/loginButton"
             android:layout_centerInParent="false"
-            android:layout_centerHorizontal="false"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="false"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:text="Not an existing user?"
+            android:layout_marginTop="20sp"
+            android:text="New user?"
             android:textSize="17dp" />
+
 
         <Button
             android:id="@+id/regIntent"
-            android:layout_width="125dp"
-            android:layout_height="24dp"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_below="@+id/loginButton"
-            android:layout_centerInParent="false"
-            android:layout_centerHorizontal="false"
-            android:layout_centerVertical="false"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="50dp"
+            android:layout_width="119dp"
+            android:layout_height="41dp"
+            android:layout_centerHorizontal="true"
             android:layout_toRightOf="@+id/registerText"
-            android:background="#F9F9F9"
-            android:contentDescription="regbutton"
-            android:text="Register Now"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="#3F51B5" />
+            android:layout_below="@id/loginButton"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/reg"
+            android:text="Register Now" />
 
-        <Button
+        <ImageButton
             android:id="@+id/googleAuth"
-            android:layout_width="200dp"
-            android:layout_height="55dp"
+            android:layout_width="119dp"
+            android:layout_height="56dp"
             android:layout_below="@id/textView1"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/google_btn" />
+            android:background="@color/fui_transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/google" />
 
         <TextView
             android:id="@+id/textView1"

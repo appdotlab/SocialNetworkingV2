@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,8 @@ public class loginActivity extends AppCompatActivity
     String token = "89042839257-01213s3kkgb417pmgm2lei0lregivc2q.apps.googleusercontent.com";
     int RC_SIGN_IN = 0;
     MaterialEditText editEmail, editPassword;
-    Button loginButton, registerButton, googleauthButton;
+    Button loginButton, registerButton ;
+    ImageButton googleauthButton;
     private FirebaseAuth mAuth;
     GoogleSignInClient mGoogleSignInClient;
     DatabaseReference mDatabase, currentUser, userRef;
@@ -62,7 +64,7 @@ public class loginActivity extends AppCompatActivity
 
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.regIntent);
-        googleauthButton = (Button) findViewById(R.id.googleAuth);
+        googleauthButton = (ImageButton) findViewById(R.id.googleAuth);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Initialize Firebase Auth

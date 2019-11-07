@@ -36,12 +36,11 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     List<messageModel> modelList;
     Context context;
     SharedPreferences prefs;
-    public String currID, receiverID,lastmessage;
+    public String currID, receiverID;
 
 
-    public messageAdapter(List<messageModel> modelList, Context context, String lastmessage) {
+    public messageAdapter(List<messageModel> modelList, Context context) {
         this.modelList = modelList;
-        this.lastmessage= lastmessage;
         this.context = context;
     }
 
@@ -68,19 +67,21 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
     {
        messageModel model = modelList.get(i);
        holder.show_message.setText(model.getMessage());
-//       if (MSG_TYPE_RIGHT == 1)
-//       {
-////           holder.seenText.setVisibility(View.GONE);
-//           if (!model.isIsseen())
-//           {
-//               Log.i("HELOO who dis", "message is seen");
-//               if (model.getMessage().compareTo(lastmessage)!=0)
-//               {
-//                   holder.seenText.setVisibility(View.VISIBLE);
-//               }
-//           }
-//       }
-
+       if((modelList.get(i).getSender()).compareTo(currID) == 0 )
+       {
+           if (i == modelList.size() - 1)
+           {
+               if (model.isIsseen())
+               {
+                   holder.seenText.setText("Seen");
+                   holder.seenText.setVisibility(View.VISIBLE);
+               }
+               else
+               {
+                   holder.seenText.setText("Delivered");
+               }
+           }
+       }
 
 
 
@@ -99,7 +100,7 @@ public class messageAdapter extends RecyclerView.Adapter<messageAdapter.recycler
         {
             super(itemView);
             show_message = (TextView) itemView.findViewById(R.id.show_message);
-           // seenText =(TextView) itemView.findViewById(R.id.seen_text1);
+            seenText =(TextView) itemView.findViewById(R.id.seen_text);
 
 
 

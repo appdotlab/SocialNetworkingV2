@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,8 @@ public class registerActivity extends AppCompatActivity
     int RC_SIGN_IN = 0;
     GoogleSignInClient mGoogleSignInClient;
     MaterialEditText email, pass1, pass2,username;
-    Button regButton, back, googleRegBtn;
+    Button  regButton,back;
+    ImageButton googleRegBtn;
     FirebaseAuth auth;
     List<userModel> names;
     DatabaseReference mDatabase, userRef,myref;
@@ -60,7 +62,7 @@ public class registerActivity extends AppCompatActivity
         pass1 = (MaterialEditText) findViewById(R.id.PasswordField);
         pass2 = (MaterialEditText) findViewById(R.id.repeatPasswordField);
         username = (MaterialEditText) findViewById(R.id.usernameField);
-        googleRegBtn = (Button) findViewById(R.id.googleRegBtn);
+        googleRegBtn = (ImageButton) findViewById(R.id.googleRegBtn);
         back = (Button) findViewById(R.id.backButton);
         regButton = (Button) findViewById(R.id.registerButton);
         // Initialize Firebase Auth

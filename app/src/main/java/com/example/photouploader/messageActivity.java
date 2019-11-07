@@ -55,7 +55,7 @@ public class messageActivity extends AppCompatActivity {
 
     List<messageModel> messageModelList;
     RecyclerView messageView;
-
+    String currentUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class messageActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         prefs = getSharedPreferences("Prefs", Context.MODE_PRIVATE);
-        final String currentUserID = prefs.getString("userID", "N/A");
+        currentUserID = prefs.getString("userID", "N/A");
         final String currUserName = prefs.getString("name", "N/A");
         final String receiverID = intent.getStringExtra("otherID");
         final String recieverName = intent.getStringExtra("otherName");
@@ -75,7 +75,7 @@ public class messageActivity extends AppCompatActivity {
         RecieverDP = (CircleImageView) findViewById(R.id.userDP);
 
 
-        messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext(),lastmessage);
+        messageAdapter recyclerAdapter = new messageAdapter(messageModelList, getApplicationContext());
         messageView = (RecyclerView) findViewById(R.id.messageView);
         messageView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         messageView.hasNestedScrollingParent();
@@ -99,7 +99,8 @@ public class messageActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                startActivity(new Intent(messageActivity.this, chat.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
             }
         });
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +111,7 @@ public class messageActivity extends AppCompatActivity {
 
                     sendMessage(currentUserID, receiverID, messageText);
                 } else {
-                    Toast.makeText(messageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(messageActivity.this, "Message can't be empty", Toast.LENGTH_SHORT).show();
                 }
                 messageArea.setText("");
             }
@@ -127,11 +128,6 @@ public class messageActivity extends AppCompatActivity {
                 String userID = dataSnapshot.getKey();
 
                 user.setUserID(userID);
-                Log.i("wth", user.getUserID());
-                Log.i("current", currentUserID);
-                Log.i("receiver", receiverID);
-                Log.i("Sent", "Works?");
-
                 readMesagges(currentUserID,receiverID,lastmessage);
             }
 
@@ -172,8 +168,31 @@ public class messageActivity extends AppCompatActivity {
 
                     }
 
-                    messageAdapter adapter = new messageAdapter(messageModelList, messageActivity.this,lastmessage);
+                    messageAdapter adapter = new messageAdapter(messageModelList, messageActivity.this);
                     messageView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        seenMessage(userid);
+    }
+    public void seenMessage(final String userid){
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    messageModel messagemodel = snapshot.getValue(messageModel.class);
+                    if (messagemodel.getReceiver().equals(currentUserID) && messagemodel.getSender().equals(userid))
+                    {
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen", true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
                 }
             }
 

@@ -36,14 +36,14 @@
         android:clickable="true"
         android:filterTouchesWhenObscured="false"
         android:src="@drawable/bear_avatar" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Tap anywhere to open a photo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="500dp"
-        />
+        android:text="Tap anywhere to upload a photo" />
 
 </RelativeLayout>

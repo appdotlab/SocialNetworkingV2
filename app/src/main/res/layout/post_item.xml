@@ -20,18 +20,19 @@
     >
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/card"
-        app:cardCornerRadius="15dp"
         android:outlineAmbientShadowColor="@android:color/black"
         android:outlineSpotShadowColor="@android:color/black"
+        app:cardCornerRadius="15dp"
 
         >
+
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:id="@+id/rl2"
                 android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                 android:layout_below="@+id/rl"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="-10dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp">
@@ -69,7 +70,8 @@
             <RelativeLayout
                 android:id="@+id/rl"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <ImageButton
                     android:id="@+id/likeBtn"
@@ -99,16 +101,18 @@
                     android:src="@drawable/liked"
                     tools:visibility="visible" />
 
+
                 <ImageButton
                     android:id="@+id/commentsButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_below="@+id/postImg"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/likesText"
                     android:background="#00FFFFFF"
                     android:scaleType="centerCrop"
                     android:src="@drawable/commentbutton" />
-
 
                 <ImageView
                     android:id="@+id/postImg"
@@ -130,10 +134,11 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginStart="71dp"
                     android:layout_marginLeft="71dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical" />
 
             </RelativeLayout>
         </RelativeLayout>

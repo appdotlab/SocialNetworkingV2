@@ -34,16 +34,24 @@
 
         android:backgroundTint="@color/fui_transparent"
         android:clickable="true"
-        android:filterTouchesWhenObscured="false"
-        android:src="@drawable/bear_avatar" />
+        android:filterTouchesWhenObscured="false" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:layout_below="@+id/imageView4"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="20dp"
         android:text="Tap anywhere to upload a photo" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/bear_avatar" />
 
 </RelativeLayout>
